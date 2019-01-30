@@ -27,37 +27,17 @@ exports.getUser = function(user_id) {
 exports.updateUser = function(user_id, new_info){
 //asser the new info is like an object {0,0,0,0,0,0 }
 //if this false throw Error
-  console.log("Users.updateUser");
-  var all_users = getAllDatabaseRows();
-
-  for(var i=1; i<all_users.length; i++){
-    var u = all_users[i].split(',');
-    if(u[0].trim()==user_id.trim()){
-      user={
-        name:u[0].trim(),
-        games_played:parseInt(u[1].trim()),
-        lost:parseInt(u[2].trim()),
-        won:parseInt(u[3].trim()),
-        tied:parseInt(u[4].trim()),
-        paper_played:parseInt(u[5].trim()),
-        rock_played:parseInt(u[6].trim()),
-        scissors_played:parseInt(u[7].trim()),
-        password:u[8].trim()
-      }
-    }
-  }
-
+  var userup = getUser(user_id);
   var k = new_info.split(",");
-  user.name = k[0];
-  user.games_played = k[1];
-  user.lost = k[2];
-  user.won = k[3];
-  user.tied = k[4];
-  user.paper_played = k[5];
-  user.rock_played = k[6];
-  user.scissors_played = k[7];
-  user.password = k[8];
-
+  userup.name = k[0];
+  userup.games_played = k[1];
+  userup.lost = k[2];
+  userup.won = k[3];
+  userup.tied = k[4];
+  userup.paper_played = k[5];
+  userup.rock_played = k[6];
+  userup.scissors_played = k[7];
+  userup.password = k[8];
   var userinfo = JSON.stringify(user);
   var file = writeFile(userinfo);
   return user;
