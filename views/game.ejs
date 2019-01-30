@@ -3,30 +3,116 @@
 <head>
   <title>P,R,S - Game</title>
   <link rel="stylesheet" href="styles/style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <style>
+  .dropbtn {
+    background-color: #3498DB;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+  }
+
+  .dropbtn:hover, .dropbtn:focus {
+    background-color: #2980B9;
+  }
+
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+
+  .dropdown a:hover {background-color: #ddd;}
+
+  .show {display: block;}
+  </style>
  </head>
 
 <body>
-  <% include global/header %>
+ <%include global/header %>
+ <div id="feedback">
 
-  <div id="feedback">
-  </div>
+   </div>
+
   <div id="throw_choice">
-      <h2>Play the Game</h2>
-      <h4><%=user.name%> it's your turn to bust a move!</h4>
+
+      <img id="referee" src="" height=300; width=300; style = "position: relative; float: left; z-index:500; padding-top:5%">
+      <h2 id="hurryUP">Play the Game</h2>
+      <h3>Welcome <%=user.name%> it's your turn to bust a move!</h3>
+
       <form action="<%=user.name%>/results" method="get">
-        Enter your choice of weapon:<br>
-        <select name="weapon">
-          <option value=" "> </option>
-          <option value="paper">Paper</option>
-          <option value="rock">Rock</option>
-          <option value="scissors">Scissors</option>
-        </select><br>
-        <button type = "submit" id="throw_choice_button">Throw Choice</button>
-      </form>
+        <input list="villains" id="villains2" name="villains">
+          <datalist id="villains">
+            <option value ="Bones">
+            <option value ="Gato">
+            <option value ="Manny">
+            <option value ="Mr Modern">
+            <option value ="Regal">
+            <option value ="The Boss">
+            <option value ="Comic Hans">
+            <option value ="Harry">
+            <option value ="Mickey">
+            <option value ="Pixie">
+            <option value ="Spock">
+            <option value ="The Magician">
+          </datalist>
+        <br> <br>
+          <input list="weapons" name="weapons">
+            <datalist id="weapons">
+              <option value="Rock">
+              <option value="Paper">
+              <option value= "Scissors">
+            </datalist>
+        <br> <br>
+          <input type="submit" id="submit" name="Play Game!" value="Play Game!">
+        </form>
+
+        <script src="scripts/scripts.js"></script>
+        <script>
+          villains.addEventListener("input", function(){
+            var k = document.getElementById("villains").value
+            var c = k.replace(' ', '_');
+            document.getElementById("villain_image").src = "images/" + c + "_waiting.svg";
+            console.log("Checked");
+          });
+
+          villains2.addEventListener("input", function(){
+            var k = document.getElementById("villains2").value
+            var c = k.toLowerCase().replace(' ', '_');
+            document.getElementById("villain_image").src = "images/" + c + "_waiting.svg";
+            console.log("Checked");
+          });
+          </script>
+        <img id="villain_image" src="images/Bones_waiting.svg" height=135; width=135;>
+        <img id="referee" src="">
+        <script src="scripts/scripts.js"></script>
     </div>
-  <footer>
-    Brought to you by the cool kids of Software Engineering - Fall, 2018.
-  </footer>
-  <script src="scripts/scripts.js"></script>
+<% include global/footer %>
+
+
+
+
+
+
+
+
  </body>
 </html>
