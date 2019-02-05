@@ -26,13 +26,13 @@ app.get('/', function(request, response){
 
 app.get('/login', function(request, response){
   console.log('Request- login');
-
   var u = Users.getUser(request.query.player_name);
-
   response.status(200);
   response.setHeader('Content-Type', 'text/html')
   response.render('game', {user:u});
 });
+
+
 
 app.get('/:user/results', function(request, response){
   console.log('Request- /'+request.params.user+'/results');

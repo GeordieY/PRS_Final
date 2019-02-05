@@ -7,11 +7,12 @@ router.get('/user/:id', function(req, res){
   console.log('Request- /user/'+req.params.id);
 
   var u = Users.getUser(req.params.id);
-
   res.status(200);
   res.setHeader('Content-Type', 'text/html')
   res.render('user_details', {user:u});
 });
+
+router.get('/user/new')
 
 
 

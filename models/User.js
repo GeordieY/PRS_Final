@@ -38,7 +38,7 @@ exports.updateUser = function(user_id, new_info){
   userup.rock_played = k[6];
   userup.scissors_played = k[7];
   userup.password = k[8];
-  var userinfo = JSON.stringify(user);
+  var user = JSON.stringify(userup);
   var file = writeFile(userinfo);
   return user;
 }
@@ -54,7 +54,8 @@ exports.deleteUser = function(user_id){
     }
   });
   var deletestring = newArray.toString();
-  writeFile(deletestring);
+  var file = writeFile(deletestring);
+  return file;
 }
 
 exports.createUser = function(user_info){
@@ -63,7 +64,8 @@ exports.createUser = function(user_info){
   var all_users = getAllDatabaseRows();
   var k = JSON.stringify(user_info);
   var final_string = all_users + k;
-  writeFile(final_string);
+  var file = writeFile(final_string);
+  return file;
 }
 
 
