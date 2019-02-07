@@ -68,6 +68,25 @@ exports.createUser = function(user_info){
   return file;
 }
 
+exports.createnewUser = function(user_name, user_password, firstname, lastname){
+  var user = {
+    name: user_name,
+    games_played:0,
+    lost:0,
+    won:0,
+    tied:0,
+    paper_played:0,
+    rock_played:0,
+    scissors_played:0,
+    password:0
+  }
+  var all_users = getAllDatabaseRows();
+  var k = JSON.stringify(user);
+  var final_string = all_users + k;
+  var file = writeFile(final_string);
+  return user;
+}
+
 
 var getAllDatabaseRows= function(){
   return fs.readFileSync(__dirname +'/../data/users.csv', 'utf8').split('\n');

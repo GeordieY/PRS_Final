@@ -18,7 +18,9 @@ res.render('user_details', {user:u});
 router.get('/user/:id', function(req,res){
   var u={
     name = req.params.id,
-    password = req.params.password
+    password = req.params.password,
+    firstname = req.params.firstname,
+    lastname = req.params.lastname
   }
   res.status(200);
   res.setHeader('Content-Type', 'text/html')
@@ -30,8 +32,12 @@ router.post('/users', function(req,res){
   var u = [];
   var name = req.body.username.trim();
   var password=req.body.password.trim();
+  var firstname = req.body.firstname.trim();
+  var lastname = req.body.lastname.trim();
   u.push(name);
   u.push(password);
+  u.push(firstname);
+  u.push(lastname);
   Users.createUser(u);
   res.redirect('/');
 });
@@ -41,14 +47,81 @@ router.get('/users/:id/edit', function(req,res){
   var name = req.params.id;
   var user = Users.getUser(name);
   res.status(200);
-  res.setHeader('Content-Type', 'text/html')
+  res.setHeader('Content-Type', 'text/html');
   res.render('user_details', {user:user});
 });
 
+//how to update users but also include time for last updated
 router.put('/users/:id', function(req,res){
-  var name = req.params.id;
+  var username = req.params.id;
+  var user= Users.getUser(username);
+  var u = [];
+  var name = req.body.username.trim();
+  var password=req.body.password.trim();
+  var firstname = req.body.firstname.trim();
+  var lastname = req.body.lastname.trim();
+  u.push(name);
+  u.push(password);
+  u.push(firstname);
+  u.push(lastname);
+  User.updateUser(user);
+  var k = User.updateUser(user)
+  res.status(200);
+  res.setHeader('Content-Type', 'text/html');
+  res.render('user_details', {user:k});
 });
 
+router.delete('/users/:id', function(req,res){
+  var username = req.params.id;
+  User.deleteUser(username);
+  res.status(200);
+  res.setHeader('Content-Type', 'text/html');
+  res.redirect('/');
+});
+
+router.get('/users/game', function(req,res){
+
+
+var user = {
+  username: req.query.id,
+  password:req.query.password,
+  firstname: req.query.firstname,
+  lastname: req.query.lastname
+}
+
+  var error;
+  var k = Users.getUser(user.username);
+
+  //if this name and password doesn't exist: create a new user
+  if(k.name == null && k.password == null){
+    User.createnewUser(user.username,user.password,user.firstname,user.lastname);
+    res.status(200);
+    res.setHeader('Content-Type', 'text/html');
+    res.render('game', {user:user});
+    }
+  //if the name exists but the password isn't present then
+  else if(k.name!= null && k.password != password){
+    var message = "The entered username exists but the entered password doesn't match it.";
+    res.status(200);
+    console.log(message);
+    res.setHeader('Content-Type', 'text/html');
+    res.render('index', {message:message});
+    console.log("wrong password");
+  }
+
+  //the name and the password matches and they exist
+  else if(k.name!=null && k.password == password){
+    res.status(200);
+    res.setHeader('Content-Type', 'text/html');
+    res.render('game', {user:user});
+  }
+
+});
+
+
+router.get('/:user/results', function(req,res){
+
+});
 
 
 /*
