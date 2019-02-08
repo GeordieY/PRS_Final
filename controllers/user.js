@@ -80,8 +80,6 @@ router.delete('/users/:id', function(req,res){
 });
 
 router.get('/users/game', function(req,res){
-
-
 var user = {
   username: req.query.id,
   password:req.query.password,
@@ -91,7 +89,6 @@ var user = {
 
   var error;
   var k = Users.getUser(user.username);
-
   //if this name and password doesn't exist: create a new user
   if(k.name == null && k.password == null){
     User.createnewUser(user.username,user.password,user.firstname,user.lastname);
@@ -115,11 +112,17 @@ var user = {
     res.setHeader('Content-Type', 'text/html');
     res.render('game', {user:user});
   }
-
 });
 
 
 router.get('/:user/results', function(req,res){
+  var user_data = {
+      name: req.params.user,
+      weapon: req.query.weapon,
+      villain: req.query.villain
+  }
+
+  var vil = user_data.villain;
 
 });
 
