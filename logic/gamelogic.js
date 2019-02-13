@@ -9,7 +9,6 @@ var compare;
 var nothrow = false;
 
 if(villain == "Bones"){
-
   compare = user.localeCompare(choice);
 }
 
