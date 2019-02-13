@@ -92,7 +92,13 @@ exports.createnewUser = function(user_name, user_password, firstname, lastname){
 
 
 var getAllDatabaseRows= function(){
-  return fs.readFileSync(__dirname +'/../data/users.csv', 'utf8').split('\n');
+  //return fs.readFileSync(__dirname +'/../data/users.csv', 'utf8').split('\n');
+  doc.useServiceAccountAuth(creds, function (err) {
+    doc.getRows(1, function (err, rows){
+    console.log(rows);
+    });
+  });
+
 }
 
 function writeFile(info){
