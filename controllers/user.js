@@ -119,10 +119,13 @@ router.get('/:user/results', function(req,res){
   var user_data = {
       name: req.params.user,
       weapon: req.query.weapon,
-      villain: req.query.villain
+      villain: req.query.villain,
+      villainchoice:
   }
 
   var vil = user_data.villain;
+
+  if(user_data.weapon == )
 
 });
 
