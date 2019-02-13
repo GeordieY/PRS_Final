@@ -17,10 +17,10 @@ res.render('user_details', {user:u});
 //how to get the userID and render the user details
 router.get('/user/:id', function(req,res){
   var u={
-    // name = req.params.id,
-    // password = req.params.password,
-    // firstname = req.params.firstname,
-    // lastname = req.params.lastname
+    name = req.params.id,
+    password = req.params.password,
+    firstname = req.params.firstname,
+    lastname = req.params.lastname
   }
   res.status(200);
   res.setHeader('Content-Type', 'text/html')
