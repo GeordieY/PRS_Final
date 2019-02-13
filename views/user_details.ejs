@@ -14,12 +14,21 @@
   <div id="enter_name">
     <h2>User Details - <%=user.name%></h2>
     <br>
-    Name: <%=user.name%><br>
-    Password: <%=user.password%><br>
+      Name: <%=user.name%><br>
+      Password: <%=user.password%><br>
+      First Name: <%=user.firstname%><br>
+      Last Name: <%=user.lastname%><br>
     <br>
+
+<!--  The account creation date and last account update date should be displayed on user_details.ejs
+ Disallow duplicate usernames
+ Disallow the creation/update of accounts with missing information
+ A user may not login without first creating an account
+ Users should be able to delete their account from this page via a “Delete Account” button. The “Delete Account” button should not appear if a user is creating an account. -->
+
   </div>
   <footer>
-    Brought to you by the cool kids of Software Engineering - Fall, 2018.
+    Brought to you by Geordie Young and Henry Schuster - Spring, 2018.
   </footer>
   <script src="scripts/scripts.js"></script>
  </body>
