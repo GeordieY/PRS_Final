@@ -1,7 +1,7 @@
 var fs = require("fs");
 var GoogleSpreadsheet = require('google-spreadsheet');
 var creds = require('./client_secret.json');
-var doc = new GoogleSpreadsheet('https://docs.google.com/spreadsheets/d/1AGog7RTXx63dncaYKYJqKc1DGJZFWBO4MjWXxm5_ljg/edit#gid=0');
+var doc = new GoogleSpreadsheet('1AGog7RTXx63dncaYKYJqKc1DGJZFWBO4MjWXxm5_ljg');
 
 exports.getUser = function(user_id) {
   console.log("Users.getUser: "+user_id);

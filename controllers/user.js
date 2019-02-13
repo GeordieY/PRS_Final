@@ -3,7 +3,7 @@ var router = express.Router();
 
 var Users = require('../models/User');
 var Villains = require('../models/Villain');
-var Game = requre('../models/Game');
+var Game = require('../models/Game');
 
 //getting a new user which loads a blank form
 router.get('/user/new', function(req,res){
@@ -17,10 +17,10 @@ res.render('user_details', {user:u});
 //how to get the userID and render the user details
 router.get('/user/:id', function(req,res){
   var u={
-    name = req.params.id,
-    password = req.params.password,
-    firstname = req.params.firstname,
-    lastname = req.params.lastname
+    // name = req.params.id,
+    // password = req.params.password,
+    // firstname = req.params.firstname,
+    // lastname = req.params.lastname
   }
   res.status(200);
   res.setHeader('Content-Type', 'text/html')
