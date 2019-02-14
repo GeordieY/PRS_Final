@@ -119,11 +119,25 @@ router.get('/:user/results', function(req,res){
   var user_data = {
       name: req.params.user,
       weapon: req.query.weapon,
-      villain: req.query.villain,
-      villainchoice:
+      villain: req.query.villain
+  }
+  var villainchoice = Game.Villainthrows(user_data.villain, user_data.weapon);
+  var userchoice = user_data.weapon;
+  if(villainchoice == "" || userchoice== ""){
+    res.status(200);
+    res.setHeader('Content-Type', 'text/html');
+    res.redirect('/game');
+  }
+  else{
+    var winner = Game.winner(villainchoice,userchoice,user_data.villain,user_data.name);
+    var useredit = Users.getUser(user_data.name,callback);
+      if(winner==user){
+        //need to finish this
+        //Users.update
+      }
+
   }
 
-  
 
 });
 
