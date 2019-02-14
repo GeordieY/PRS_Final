@@ -123,9 +123,7 @@ router.get('/:user/results', function(req,res){
       villainchoice:
   }
 
-  var vil = user_data.villain;
-
-  if(user_data.weapon == )
+  
 
 });
 

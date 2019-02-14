@@ -1,4 +1,7 @@
 //Enter the Game Logic in here
+var gaussian = require('gaussian');
+
+
 
 exports.winner = function(villainchoice, userchoice, villain_name, user_name){
   if(villainchoice == "Paper"){
@@ -71,14 +74,32 @@ else if(villain=="Comic Hans"){
   return handleStrategy(userthrow, "Loss");
 }
 
+else if(villain=="Gato"){
+  var distribution = gaussian(0.3,0.10);
+    if(distribution<0.5){
+      return "Rock";
+    }
+    else if(distribution>0.5 && distribution<0.7){
+      return "Paper";
+    }
+    else{
+      return "Scissors";
+    }
+}
 
-
-
-
-
-
-
-
+else if(villain=="Mr Modern"){
+  var distribution = gaussian(0.3,0.10);
+    if(distribution<0.5){
+      return "Paper";
+    }
+    else if(distribution>0.5 && distribution<0.7){
+      return "Scissors";
+    }
+    else{
+      return "Rock";
+    }
+  }
+}
 
 exports.getVillain = function(){
 
