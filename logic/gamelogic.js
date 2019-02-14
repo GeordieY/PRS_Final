@@ -1,7 +1,7 @@
 //Enter the Game Logic in here
 exports.VillainThrows = function(villainname, userchoice) {
 var userthrow = this.userchoice;
-var villainthrow;
+var villainschoice = randomThrow();
 console.log("userthrow" + throw);
 var random = (10 * Math.random());
 var index = [];
@@ -254,7 +254,6 @@ if(villain == "Bones"){
     //console.log("final return vil" + choice);
     return k;
   }
-}
 
 
 
