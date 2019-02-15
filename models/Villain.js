@@ -27,7 +27,7 @@ exports.getVillain = function(villain_id) {
 exports.updateVillain = function(villain_id, new_info){
 //asser the new info is like an object {0,0,0,0,0,0 }
 //if this false throw Error
-  var villainup = getUser(user_id);
+  var villainup = getUser(villain_id);
   var k = new_info.split(",");
   villainup.name = k[0];
   villainup.games_played = k[1];

@@ -48,6 +48,14 @@ exports.updateUser = function(user_id, new_info){
   return user;
 }
 
+exports.changeParam= function(user_id, param, newinfo){
+  var userup = getUser(user_id,callback);
+  userup.param = newinfo;
+  var user = JSON.stringify(userup);
+  var file = writeFile(userinfo);
+  return user;
+}
+
 exports.deleteUser = function(user_id){
   console.log("Users.deleteUser");
   var string;

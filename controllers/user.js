@@ -116,11 +116,13 @@ var user = {
 
 
 router.get('/:user/results', function(req,res){
+//need to add the same for winners then load the page
   var user_data = {
       name: req.params.user,
       weapon: req.query.weapon,
       villain: req.query.villain
   }
+  var newinfo;
   var villainchoice = Game.Villainthrows(user_data.villain, user_data.weapon);
   var userchoice = user_data.weapon;
   if(villainchoice == "" || userchoice== ""){
@@ -131,12 +133,48 @@ router.get('/:user/results', function(req,res){
   else{
     var winner = Game.winner(villainchoice,userchoice,user_data.villain,user_data.name);
     var useredit = Users.getUser(user_data.name,callback);
+    var villainedit = Villain.getVillain(user_data.villain);
       if(winner==user){
-        //need to finish this
-        //Users.update
+        if(userchoice== "Paper"){
+          newinfo = [useredit.name, parseInt(useredit.games_played) + 1, parseInt(useredit.won) + 1, useredit.lost, useredit.tied, parseInt(useredit.paper_played)+ 1, useredit.rock_played,useredit.scissors_played, useredit.password];
+        }
+        else if(userchoice == "Rock"){
+          newinfo = [useredit.name, parseInt(useredit.games_played) + 1, parseInt(useredit.won) + 1, useredit.lost, useredit.tied, parseInt(useredit.paper_played), parseInt(useredit.rock_played) +1,useredit.scissors_played, useredit.password];
+        }
+        else{
+          newinfo = [useredit.name, parseInt(useredit.games_played) + 1, parseInt(useredit.won) + 1, useredit.lost, useredit.tied, parseInt(useredit.paper_played), useredit.rock_played,parseInt(useredit.scissors_played) + 1, useredit.password];
+        }
       }
+     else if(winner==user_data.villain){
+       if(userchoice== "Paper"){
+         newinfo = [useredit.name, parseInt(useredit.games_played) + 1, parseInt(useredit.won) , parseInt(useredit.lost) +1 , useredit.tied, parseInt(useredit.paper_played)+ 1, useredit.rock_played,useredit.scissors_played, useredit.password];
+       }
+       else if(userchoice == "Rock"){
+         newinfo = [useredit.name, parseInt(useredit.games_played) + 1, parseInt(useredit.won) , parseInt(useredit.lost) +1 , useredit.tied, parseInt(useredit.paper_played), parseInt(useredit.rock_played) +1,useredit.scissors_played, useredit.password];
+       }
+       else{
+         newinfo = [useredit.name, parseInt(useredit.games_played) + 1, parseInt(useredit.won) , parseInt(useredit.lost) +1 , useredit.tied, parseInt(useredit.paper_played), useredit.rock_played,parseInt(useredit.scissors_played) + 1, useredit.password];
+       }
+     }
+     else{
+       if(userchoice== "Paper"){
+         newinfo = [useredit.name, parseInt(useredit.games_played) + 1, parseInt(useredit.won) , parseInt(useredit.lost) , parseInt(useredit.tied) + 1 , parseInt(useredit.paper_played)+ 1, useredit.rock_played,useredit.scissors_played, useredit.password];
+       }
+       else if(userchoice == "Rock"){
+         newinfo = [useredit.name, parseInt(useredit.games_played) + 1, parseInt(useredit.won) , parseInt(useredit.lost) , parseInt(useredit.tied) + 1, parseInt(useredit.paper_played), parseInt(useredit.rock_played) +1,useredit.scissors_played, useredit.password];
+       }
+       else{
+         newinfo = [useredit.name, parseInt(useredit.games_played) + 1, parseInt(useredit.won) , parseInt(useredit.lost) , parseInt(useredit.tied) + 1, parseInt(useredit.paper_played), useredit.rock_played,parseInt(useredit.scissors_played) + 1, useredit.password];
+       }
+     }
+   }
 
-  }
+   Users.updateUser(user_data.name, newinfo);
+   Villains.updateUser(user_data.villain, villaininfo);
+
+   res.status(200);
+   res.setHeader('Content-Type', 'text/html');
+   res.render('results', {user:user_data});
 
 
 });
