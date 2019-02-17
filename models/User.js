@@ -44,7 +44,7 @@ exports.updateUser = function(user_id, new_info){
   userup.scissors_played = k[7];
   userup.password = k[8];
   var user = JSON.stringify(userup);
-  var file = writeFile(userinfo);
+  var file = writeFile(user);
   return user;
 }
 

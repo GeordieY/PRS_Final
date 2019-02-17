@@ -1,8 +1,12 @@
 var fs = require("fs");
+var GoogleSpreadsheet = require('google-spreadsheet');
+var creds = require('./client_secret.json');
+var doc = new GoogleSpreadsheet('1AGog7RTXx63dncaYKYJqKc1DGJZFWBO4MjWXxm5_ljg');
 
+/*
 exports.getVillain = function(villain_id) {
-  console.log("Villain.getUser: "+villain_id);
-  var villain = createBlankUser();
+  console.log("Villain.getvillain: "+villain_id);
+  var villain = createBlankvillain();
   var all_villains = getAllDatabaseRows();
 
   for(var i=1; i<all_villains.length; i++){
@@ -23,11 +27,39 @@ exports.getVillain = function(villain_id) {
   }
   return villain;
 }
+*/
+
+exports.getvillain = function(villain_id, callback) {
+  console.log("villains.getvillain: "+villain_id);
+  exports.getvillains(function(villain_data){
+    for(var i=1; i<villain_data.length;i++){
+      if(villain_data[i].name == villain_id.trim()){
+        villain={
+          name: villain_data[i].name,
+          games_played:villain_data[i].games_played,
+          lost:villain_data[i].lost,
+          won:villain_data[i].won,
+          tied:villain_data[i].tied,
+          paper_played:villain_data[i].paper_played,
+          rock_played:villain_data[i].rock_played,
+          scissors_played:villain_data[i].scissors_played
+        }
+      }
+    }
+  });
+  return villain;
+}
+
+exports.getVillains = function(callback){
+  getAllDatabaseRows(function(villains)){
+    callback(villains);
+  });
+}
 
 exports.updateVillain = function(villain_id, new_info){
 //asser the new info is like an object {0,0,0,0,0,0 }
 //if this false throw Error
-  var villainup = getUser(villain_id);
+  var villainup = getvillain(villain_id);
   var k = new_info.split(",");
   villainup.name = k[0];
   villainup.games_played = k[1];
@@ -37,17 +69,26 @@ exports.updateVillain = function(villain_id, new_info){
   villainup.paper_played = k[5];
   villainup.rock_played = k[6];
   villainup.scissors_played = k[7];
-  villainup.password = k[8];
   var villain = JSON.stringify(villainup);
-  var file = writeFile(userinfo);
+  var file = writeFile(villain);
   return villain;
 }
 
-
+/*
 var getAllDatabaseRows= function(){
   return fs.readFileSync(__dirname +'/../data/villains.csv', 'utf8').split('\n');
 }
+*/
+var getAllDatabaseRows= function(callback){
+  //return fs.readFileSync(__dirname +'/../data/villains.csv', 'utf8').split('\n');
+  doc.useServiceAccountAuth(creds, function (err) {
+    doc.getRows(1, function (err, rows){
+  //  console.log(rows);
+      callback(rows);
+    });
+  });
 
+}
 function writeFile(info){
   var c = fs.writeFileSync(__dirname +'/../data/villains.csv', info, 'utf8');
   return c;
