@@ -46,6 +46,8 @@ Users.getUser(userName, function(user_data){
   }
   else{
     failure = "Failure" ;
+    userName = "";
+    userPassword = "";
     response.render('index', {user:user_data, error:failure});
   }
 });

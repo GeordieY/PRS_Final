@@ -34,21 +34,33 @@ router.post('/users', function(req,res){
   var password=req.body.password.trim();
   var firstname = req.body.firstname.trim();
   var lastname = req.body.lastname.trim();
+/*
   u.push(name);
   u.push(password);
   u.push(firstname);
   u.push(lastname);
-  Users.createUser(u);
+  */
+  if(Users.createnewUser(name,password,firstname,lastname)==true){
   res.redirect('/');
+  }
+
+  else{
+   user_data={};
+   user_data["failure"] = 4;
+   res.status(200);
+   res.setHeader('Content-Type', 'text/html')
+   res.render('user_details', {user:user_data});
+   }
 });
 
 //get the user you have and load the information and then load the edit screen
 router.get('/users/:id/edit', function(req,res){
   var name = req.params.id;
-  var user = Users.getUser(name);
+  var user = Users.getUser(name, function(u){
   res.status(200);
   res.setHeader('Content-Type', 'text/html');
   res.render('user_details', {user:user});
+  });
 });
 
 //how to update users but also include time for last updated

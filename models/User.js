@@ -49,7 +49,9 @@ exports.updateUser = function(user_id, new_info){
 }
 
 exports.changeParam= function(user_id, param, newinfo){
-  var userup = getUser(user_id,callback);
+  var userup = getUser(user_id,function(){
+    console.log(newinfo);
+  });
   userup.param = newinfo;
   var user = JSON.stringify(userup);
   var file = writeFile(userinfo);
@@ -82,6 +84,9 @@ exports.createUser = function(user_info){
 }
 
 exports.createnewUser = function(user_name, user_password, firstname, lastname){
+if(user_name == null || user_password == null || firstname == null || lastname == null){
+  return false;
+}
   var user = {
     name: user_name,
     games_played:0,
@@ -97,7 +102,7 @@ exports.createnewUser = function(user_name, user_password, firstname, lastname){
   var k = JSON.stringify(user);
   var final_string = all_users + k;
   var file = writeFile(final_string);
-  return user;
+  return true;
 }
 
 
