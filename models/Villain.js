@@ -51,7 +51,7 @@ exports.getvillain = function(villain_id, callback) {
 }
 
 exports.getVillains = function(callback){
-  getAllDatabaseRows(function(villains)){
+  getAllDatabaseRows(function(villains){
     callback(villains);
   });
 }
