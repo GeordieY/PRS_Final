@@ -9,7 +9,7 @@ exports.getUser = function(user_id, callback) {
   exports.getUsers(function(user_data){
     for(var i=1; i<user_data.length;i++){
     //  var user = {};
-      if(user_data[i].name == user_id.trim()){
+      if(user_data[i].name == String(user_id).trim()){
         user={
           name: user_data[i].name,
           games_played:user_data[i].games_played,
