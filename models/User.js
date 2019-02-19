@@ -3,10 +3,12 @@ var GoogleSpreadsheet = require('google-spreadsheet');
 var creds = require('./client_secret.json');
 var doc = new GoogleSpreadsheet('1AGog7RTXx63dncaYKYJqKc1DGJZFWBO4MjWXxm5_ljg');
 
+var user = {};
 exports.getUser = function(user_id, callback) {
   console.log("Users.getUser: "+user_id);
   exports.getUsers(function(user_data){
     for(var i=1; i<user_data.length;i++){
+    //  var user = {};
       if(user_data[i].name == user_id.trim()){
         user={
           name: user_data[i].name,

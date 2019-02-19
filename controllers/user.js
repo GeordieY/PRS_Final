@@ -3,7 +3,7 @@ var router = express.Router();
 
 var Users = require('../models/User');
 var Villains = require('../models/Villain');
-var Game = require('../models/Game');
+var Game = require('../logic/gamelogic');
 
 //getting a new user which loads a blank form
 router.get('/user/new', function(req,res){

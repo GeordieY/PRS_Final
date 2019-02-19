@@ -46,7 +46,7 @@ exports.winner = function(villainchoice, userchoice, villain_name, user_name){
 exports.Villainthrows = function(villainname, userchoice) {
 var userthrow = this.userchoice;
 var villainschoice = randomThrow();
-console.log("userthrow" + throw);
+console.log("userthrow" + userthrow);
 var random = (10 * Math.random());
 var index = [];
 var compare;
@@ -55,7 +55,7 @@ var paper = "Paper";
 var scissors = "Scissors";
 var rock = "Rock";
 
-if(villain == "Bones" || villain == "Spock" || villain=="Pixie" || villain=="Harry"||villain="The Magician"){
+if(villain == "Bones" || villain == "Spock" || villain=="Pixie" || villain=="Harry"||villain=="The Magician"){
   return villainschoice
 }
 else if(villain=="Manny"){
