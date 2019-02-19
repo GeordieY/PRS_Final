@@ -7,7 +7,12 @@ var Game = require('../logic/gamelogic');
 
 //getting a new user which loads a blank form
 router.get('/user/new', function(req,res){
-var u = {}
+var u = {
+    name: req.query.player_name,
+    password: req.query.password,
+    firstname: req.query.firstname,
+    lastname: req.query.lastname
+  }
 res.status(200);
 res.setHeader('Content-Type', 'text/html');
 res.render('user_details', {user:u});

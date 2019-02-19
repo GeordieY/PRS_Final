@@ -29,7 +29,7 @@ app.get('/', function(request, response){
 
 app.get('/login', function(request, response){
 var user_data = {
-  name: request.query.id,
+  name: request.query.player_name,
   password: request.query.password
 };
 userName = user_data.name;
