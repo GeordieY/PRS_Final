@@ -13,9 +13,10 @@ var u = {
     firstname: req.query.firstname,
     lastname: req.query.lastname
   }
+var k = Users.createnewUser(u.name,u.password,u.firstname,u.lastname);
 res.status(200);
 res.setHeader('Content-Type', 'text/html');
-res.render('user_details', {user:u});
+res.render('user_details', {user:k});
 });
 
 /*

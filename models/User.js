@@ -104,7 +104,7 @@ if(user_name == null || user_password == null || firstname == null || lastname =
   var k = JSON.stringify(user);
   var final_string = all_users + k;
   var file = writeFile(final_string);
-  return true;
+  return user;
 }
 
 
