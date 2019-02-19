@@ -13,11 +13,12 @@ res.setHeader('Content-Type', 'text/html');
 res.render('user_details', {user:u});
 });
 
-
+/*
 //how to get the userID and render the user details
 router.get('/user/:id', function(req,res){
   var u={
     name = req.params.id,
+    actualname = req.body.player_name,
     password = req.params.password,
     firstname = req.params.firstname,
     lastname = req.params.lastname
@@ -26,6 +27,7 @@ router.get('/user/:id', function(req,res){
   res.setHeader('Content-Type', 'text/html')
   res.render('user_details', {user:u});
 });
+*/
 
 //method to add a new user and return to the game page
 router.post('/users', function(req,res){
