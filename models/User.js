@@ -26,7 +26,7 @@ exports.getUser = function(user_id, callback) {
 }
 
 exports.getUsers = function(callback){
-  getAllDatabaseRows(function(users)){
+  getAllDatabaseRows(function(users){
     callback(users);
   });
 }
