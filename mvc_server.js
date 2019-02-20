@@ -42,6 +42,8 @@ var failure = " ";
 
 
 if(request.query.new == "new"){
+  response.status(200);
+  response.setHeader('Content-Type', 'text/html');
   response.render('game', {user:user_data});
 }
 
@@ -50,15 +52,21 @@ else{
 Users.getUser(userName, function(user_data){
   if(user_data.name == ""){
     console.log("No name submitted");
+    response.status(200);
+    response.setHeader('Content-Type', 'text/html');
     response.render('index', {user:user_data, error:failure});
   }
   else if(user_data.password == userPassword){
+    response.status(200);
+    response.setHeader('Content-Type', 'text/html')
     response.render('game', {user:user_data});
   }
   else{
     failure = "Failure" ;
     userName = "";
     userPassword = "";
+    response.status(200);
+    response.setHeader('Content-Type', 'text/html');
     response.render('index', {user:user_data, error:failure});
   }
 });
