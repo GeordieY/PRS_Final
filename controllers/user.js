@@ -145,6 +145,7 @@ router.get('/:user/results', function(req,res){
   var villainchoice = Game.Villainthrows(user_data.villain, user_data.weapon);
   var userchoice = user_data.weapon;
   if(villainchoice == "" || userchoice== ""){
+    console.log("This happened");
     res.status(200);
     res.setHeader('Content-Type', 'text/html');
     res.redirect('/game');
@@ -156,7 +157,7 @@ router.get('/:user/results', function(req,res){
       console.log(user_data.name + "Got user");
     });
     var villainedit = Villains.getvillain(user_data.villain);
-    user_data.weapon = villainedit.
+    user_data.weapon = villainedit;
 //if time permits: write another modular function to do this
       if(winner==useredit.name){
         if(userchoice== "Paper"){
