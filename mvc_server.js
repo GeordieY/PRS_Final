@@ -33,9 +33,19 @@ var user_data = {
   name: request.query.player_name,
   password: request.query.password
 };
+
+
 userName = user_data.name;
 userPassword = user_data.password;
 var failure = " ";
+
+
+
+if(request.query.new == "new"){
+  response.render('game', {user:user_data});
+}
+
+else{
 
 Users.getUser(userName, function(user_data){
   if(user_data.name == ""){
@@ -52,6 +62,8 @@ Users.getUser(userName, function(user_data){
     response.render('index', {user:user_data, error:failure});
   }
 });
+
+}
   console.log('Request- login');
   //var u = Users.getUser(request.query.player_name);
 //need to write MVC server details;

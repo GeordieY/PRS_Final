@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>P,R,S - User Details</title>
-  <link rel="stylesheet" href="styles/style.css">
+  <link rel="stylesheet" href="../styles/style.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
  </head>
 
@@ -13,15 +13,24 @@
   <div id="feedback">
   </div>
   <div id="enter_name">
+  <%if(user.type=="new"){%>
+  <form action="/login" method="get">
+    Username:<input type="text" id="enter_name_input" name="player_name"><br>
+    Password:<input type="password" id="enter_password_input" name="password"><br>
+    Firstname:<input type="text" id="enter_firstname_input" name="firstname"><br>
+    Lastname: <input type="text" id="enter_lastname_input" name="lastname"><br>
+    <input hidden type="radio" id="new" name="new" visbility="hidden"> <br>
+    <button type="submit" id = "enter_name_button">Submit Name</button>
+  </form>
+  <%}else{%>
     <h2>User Details - <%=user.name%></h2>
     <br>
       Name: <%=user.name%><br>
       Password: <%=user.password%><br>
       First Name: <%=user.firstname%><br>
       Last Name: <%=user.lastname%><br>
-    <br>
-
-  
+  <%}%>
+</div>
 
 <!--  The account creation date and last account update date should be displayed on user_details.ejs
  Disallow duplicate usernames
