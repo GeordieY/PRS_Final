@@ -41,7 +41,7 @@ var failure = " ";
 
 
 
-if(request.query.new == "new"){
+if(request.query.type == "on"){
   response.status(200);
   response.setHeader('Content-Type', 'text/html');
   response.render('game', {user:user_data});
