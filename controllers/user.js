@@ -137,7 +137,8 @@ router.get('/:user/results', function(req,res){
   var user_data = {
       name: req.params.user,
       weapon: req.query.weapon,
-      villain: req.query.villain
+      villain: req.query.villain,
+      weapon: ""
   }
   var newinfo;
   var villaininfo;
@@ -155,7 +156,7 @@ router.get('/:user/results', function(req,res){
       console.log(user_data.name + "Got user");
     });
     var villainedit = Villains.getvillain(user_data.villain);
-
+    user_data.weapon = villainedit.
 //if time permits: write another modular function to do this
       if(winner==useredit.name){
         if(userchoice== "Paper"){
