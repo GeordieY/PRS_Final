@@ -151,11 +151,13 @@ router.get('/:user/results', function(req,res){
 
   else{
     var winner = Game.winner(villainchoice,userchoice,user_data.villain,user_data.name);
-    var useredit = Users.getUser(user_data.name,callback);
-    var villainedit = Villain.getVillain(user_data.villain);
+    var useredit = Users.getUser(user_data.name,function(){
+      console.log(user_data.name + "Got user");
+    });
+    var villainedit = Villains.getvillain(user_data.villain);
 
 //if time permits: write another modular function to do this
-      if(winner==user){
+      if(winner==useredit.name){
         if(userchoice== "Paper"){
           newinfo = [useredit.name, parseInt(useredit.games_played) + 1, parseInt(useredit.won) + 1, useredit.lost, useredit.tied, parseInt(useredit.paper_played)+ 1, useredit.rock_played,useredit.scissors_played, useredit.password];
           villaininfo = [villainedit.name, parseInt(villainedit.games_played) + 1, villainedit.won, parseInt(villainedit.lost)+1, villainedit.tied, villainedit.paper_played, parseInt(villainedit.rock_played) + 1, villainedit.scissors_played];
@@ -200,7 +202,7 @@ router.get('/:user/results', function(req,res){
    }
 
    Users.updateUser(user_data.name, newinfo);
-   Villains.updateUser(user_data.villain, villaininfo);
+   Villains.updateVillain(user_data.villain, villaininfo);
 
    res.status(200);
    res.setHeader('Content-Type', 'text/html');

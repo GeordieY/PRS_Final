@@ -43,7 +43,7 @@ exports.winner = function(villainchoice, userchoice, villain_name, user_name){
 
 
 
-exports.Villainthrows = function(villainname, userchoice) {
+exports.Villainthrows = function(villain, userchoice) {
 var userthrow = this.userchoice;
 var villainschoice = randomThrow();
 console.log("userthrow" + userthrow);

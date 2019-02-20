@@ -1,6 +1,1 @@
-name,games played,games won,games lost, password
-mario,10,0,8,1234
-luigi,9,2,6,green_machine
-toad,8,8,0,i<3nyc
-peach,7,5,1,xoxoxo
-hi,0,0,0,hi
+{"name":"","games_played":"NaN","lost":"NaN","won":"NaN","tied":"NaN","paper_played":"NaN","rock_played":"","scissors_played":"NaN","password":""}

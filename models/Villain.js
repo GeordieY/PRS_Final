@@ -28,12 +28,12 @@ exports.getVillain = function(villain_id) {
   return villain;
 }
 */
-
+var villain = {}
 exports.getvillain = function(villain_id, callback) {
   console.log("villains.getvillain: "+villain_id);
-  exports.getvillains(function(villain_data){
+  exports.getVillains(function(villain_data){
     for(var i=1; i<villain_data.length;i++){
-      if(villain_data[i].name == villain_id.trim()){
+      if(villain_data[i].name == String(villain_id).trim()){
         villain={
           name: villain_data[i].name,
           games_played:villain_data[i].games_played,
@@ -59,8 +59,10 @@ exports.getVillains = function(callback){
 exports.updateVillain = function(villain_id, new_info){
 //asser the new info is like an object {0,0,0,0,0,0 }
 //if this false throw Error
-  var villainup = getvillain(villain_id);
-  var k = new_info.split(",");
+  var villainup = exports.getvillain(villain_id,function(){
+    console.log(villain_id);
+  });
+  var k = String(new_info).split(",");
   villainup.name = k[0];
   villainup.games_played = k[1];
   villainup.lost = k[2];

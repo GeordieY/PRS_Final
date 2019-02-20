@@ -34,8 +34,10 @@ exports.getUsers = function(callback){
 }
 
 exports.updateUser = function(user_id, new_info){
-  var userup = getUser(user_id, callback);
-  var k = new_info.split(",");
+  var userup = exports.getUser(user_id, function(){
+    console.log(user_id + "working");
+  });
+  var k = String(new_info).split(",");
   userup.name = k[0];
   userup.games_played = k[1];
   userup.lost = k[2];
