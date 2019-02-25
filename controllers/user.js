@@ -111,7 +111,7 @@ var user = {
     User.createnewUser(user.username,user.password,user.firstname,user.lastname);
     res.status(200);
     res.setHeader('Content-Type', 'text/html');
-    res.render('game', {user:user});
+    res.render('/game', {user:user});
     }
   //if the name exists but the password isn't present then
   else if(k.name!= null && k.password != user.password){
@@ -127,7 +127,7 @@ var user = {
   else if(k.name!=null && k.password == password){
     res.status(200);
     res.setHeader('Content-Type', 'text/html');
-    res.render('game', {user:user});
+    res.render('/game', {user:user});
   }
 });
 
@@ -207,7 +207,7 @@ router.get('/:user/results', function(req,res){
    Villains.updateVillain(user_data.villain, villaininfo);
 
    res.status(200);
-   res.setHeader('Content-Type', 'text/html');
+  // res.setHeader('Content-Type', 'text/html');
    res.render('results', {user:user_data, winner:winner});
 
 
