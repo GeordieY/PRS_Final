@@ -81,8 +81,8 @@ router.put('/users/:id', function(req,res){
   u.push(password);
   u.push(firstname);
   u.push(lastname);
-  User.updateUser(user);
-  var k = User.updateUser(user)
+  User.updateUser(u);
+  var k = User.updateUser(u)
   res.status(200);
   res.setHeader('Content-Type', 'text/html');
   res.render('user_details', {user:k});
