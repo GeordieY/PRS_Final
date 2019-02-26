@@ -81,8 +81,8 @@ router.put('/users/:id', function(req,res){
   u.push(password);
   u.push(firstname);
   u.push(lastname);
-  User.updateUser(u);
-  var k = User.updateUser(u)
+  Users.updateUser(u);
+  var k = Users.updateUser(u)
   res.status(200);
   res.setHeader('Content-Type', 'text/html');
   res.render('user_details', {user:k});
@@ -145,21 +145,24 @@ router.get('/:user/results', function(req,res){
   var villainchoice = Game.Villainthrows(user_data.villain, user_data.weapon);
   var userchoice = user_data.weapon;
   if(villainchoice == "" || userchoice== ""){
-    console.log("This happened");
+    console.log("User and Villain Empty");
     res.status(200);
     res.setHeader('Content-Type', 'text/html');
     res.redirect('/game');
   }
 
   else{
-    var winner = Game.winner(villainchoice,userchoice,user_data.villain,user_data.name);
+    console.log(Game.winner(villainchoice,userchoice,user_data.villain,user_data.name))
+    var result = {
+      winner: Game.winner(villainchoice,userchoice,user_data.villain,user_data.name)
+    }
     var useredit = Users.getUser(user_data.name,function(){
       console.log(user_data.name + "Got user");
     });
     var villainedit = Villains.getvillain(user_data.villain);
     user_data.weapon = villainedit;
 //if time permits: write another modular function to do this
-      if(winner==useredit.name){
+      if(result.winner==useredit.name){
         if(userchoice== "Paper"){
           newinfo = [useredit.name, parseInt(useredit.games_played) + 1, parseInt(useredit.won) + 1, useredit.lost, useredit.tied, parseInt(useredit.paper_played)+ 1, useredit.rock_played,useredit.scissors_played, useredit.password];
           villaininfo = [villainedit.name, parseInt(villainedit.games_played) + 1, villainedit.won, parseInt(villainedit.lost)+1, villainedit.tied, villainedit.paper_played, parseInt(villainedit.rock_played) + 1, villainedit.scissors_played];
@@ -173,7 +176,7 @@ router.get('/:user/results', function(req,res){
           villaininfo = [villainedit.name, parseInt(villainedit.games_played) + 1, villainedit.won, parseInt(villainedit.lost)+1, villainedit.tied, parseInt(villainedit.paper_played) + 1, parseInt(villainedit.rock_played), parseInt(villainedit.scissors_played)];
         }
       }
-     else if(winner==user_data.villain){
+     else if(result.winner==user_data.villain){
        if(userchoice== "Paper"){
          newinfo = [useredit.name, parseInt(useredit.games_played) + 1, parseInt(useredit.won) , parseInt(useredit.lost) +1 , useredit.tied, parseInt(useredit.paper_played)+ 1, useredit.rock_played,useredit.scissors_played, useredit.password];
          villaininfo = [villainedit.name, parseInt(villainedit.games_played) + 1, parseInt(villainedit.won) + 1, parseInt(villainedit.lost), villainedit.tied, villainedit.paper_played, parseInt(villainedit.rock_played), parseInt(villainedit.scissors_played) + 1];
@@ -208,7 +211,7 @@ router.get('/:user/results', function(req,res){
 
    res.status(200);
   // res.setHeader('Content-Type', 'text/html');
-   res.render('results', {user:user_data, winner:winner});
+   res.render('results', {user:user_data, winner:result});
 
 
 });
