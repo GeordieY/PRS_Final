@@ -3,7 +3,8 @@ var router = express.Router();
 
 var Users = require('../models/User');
 var Villains = require('../models/Villain');
-var Game = require('../logic/gamelogic');
+var Game = require('../models/gamelogic');
+console.log(Game);
 
 //getting a new user which loads a blank form
 router.get('/user/new', function(req,res){
@@ -211,6 +212,7 @@ router.get('/:user/results', function(req,res){
 
    res.status(200);
   // res.setHeader('Content-Type', 'text/html');
+  console.log("winner" +result.winner);
    res.render('results', {user:user_data, winner:result});
 
 
