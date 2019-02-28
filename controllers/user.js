@@ -138,11 +138,11 @@ router.get('/:user/results', function(req,res){
   var user_data = {
       name: req.params.user,
       weapon: req.query.weapon,
-      villain: req.query.villain,
-      weapon: ""
+      villain: req.query.villain
   }
   var newinfo;
   var villaininfo;
+  console.log("user_data"+user_data);
   var villainchoice = Game.Villainthrows(user_data.villain, user_data.weapon);
   var userchoice = user_data.weapon;
   if(villainchoice == "" || userchoice== ""){
@@ -153,7 +153,7 @@ router.get('/:user/results', function(req,res){
   }
 
   else{
-    console.log(Game.winner(villainchoice,userchoice,user_data.villain,user_data.name))
+    console.log("user_data"+user_data);
     var result = {
       winner: Game.winner(villainchoice,userchoice,user_data.villain,user_data.name)
     }
@@ -212,7 +212,7 @@ router.get('/:user/results', function(req,res){
 
    res.status(200);
   // res.setHeader('Content-Type', 'text/html');
-  console.log("winner" +result.winner);
+   console.log("user data" +user_data);
    res.render('results', {user:user_data, winner:result});
 
 
