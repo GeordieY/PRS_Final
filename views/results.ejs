@@ -19,13 +19,10 @@
      <br><br>
         <%=user.name%> chose <%=user.weapon%>
     <br><br>
-        <%=user.villain%> chose <%=user.weapon%>
+        <%=user.villain%> chose <%=user.villainchoice%>
     <br><br>
         The winner is <%=winner.winner%>
     <br><br>
-    <object id = "villain_image" type="image/svg+xml" data="../images/<%=villain.name.replace(' ', '_').toLowerCase()%>_<%=villain.weapon.toLowerCase()%>.svg" width = "150vw" height = "150vh"></object>
-    <!--<object id = "user_image" type="image/svg+xml" data="../images/user_<%=user.weapon.toLowerCase()%>.svg" width = "150vw" height = "150vh"></object>-->
-    <img id="player_image" src="../images/user_<%=user.weapon.toLowerCase()%>.png" height=135; width=135;>
 
     </div>
   <form action="/playagain" method="Get">

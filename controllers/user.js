@@ -137,31 +137,43 @@ router.get('/:user/results', function(req,res){
 //need to add the same for winners then load the page
   var user_data = {
       name: req.params.user,
-      weapon: req.query.weapon,
-      villain: req.query.villain
+      weapon: String(req.query.weapons),
+      villain: String(req.query.villains),
+      villainchoice: ""
   }
+  console.log(user_data.name);
+  //console.log(req.params.player_name);
+
+  //console.log(user_data.name + "Name");
+
+  console.log("Queries" + req.query.villains + "Weapon" + req.query.weapons);
+
   var newinfo;
   var villaininfo;
   console.log("user_data"+user_data);
   var villainchoice = Game.Villainthrows(user_data.villain, user_data.weapon);
   var userchoice = user_data.weapon;
+  user_data.villainchoice = String(villainchoice);
   if(villainchoice == "" || userchoice== ""){
     console.log("User and Villain Empty");
     res.status(200);
     res.setHeader('Content-Type', 'text/html');
     res.redirect('/game');
   }
-
   else{
-    console.log("user_data"+user_data);
+    //console.log("user_data"+user_data);
     var result = {
-      winner: Game.winner(villainchoice,userchoice,user_data.villain,user_data.name)
+      winner: String(Game.winner(villainchoice,userchoice,user_data.villain,user_data.name))
     }
+
     var useredit = Users.getUser(user_data.name,function(){
       console.log(user_data.name + "Got user");
     });
-    var villainedit = Villains.getvillain(user_data.villain);
-    user_data.weapon = villainedit;
+    var villainedit = Villains.getvillain(user_data.villain, function(){
+      console.log(user_data.villain + "Got villain");
+    });
+
+    //user_data.weapon = villainedit;
 //if time permits: write another modular function to do this
       if(result.winner==useredit.name){
         if(userchoice== "Paper"){
@@ -210,12 +222,11 @@ router.get('/:user/results', function(req,res){
    Users.updateUser(user_data.name, newinfo);
    Villains.updateVillain(user_data.villain, villaininfo);
 
+
    res.status(200);
   // res.setHeader('Content-Type', 'text/html');
-   console.log("user data" +user_data);
+  // console.log("user data" +user_data);
    res.render('results', {user:user_data, winner:result});
-
-
 });
 
 

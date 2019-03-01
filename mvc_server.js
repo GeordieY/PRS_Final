@@ -132,3 +132,11 @@ app.get('/about', function(request, response){
   response.setHeader('Content-Type', 'text/html')
   response.render('about');
 });
+
+/*
+Deleted HTML EJS:
+<!--  <object id = "villain_image" type="image/svg+xml" data="../images/<%=user.villain.replace(' ', '_').toLowerCase()%>_<%=user.weapon.toLowerCase()%>.svg" width = "150vw" height = "150vh"></object>
+object id = "user_image" type="image/svg+xml" data="../images/user_<%=user.weapon.toLowerCase()%>.svg" width = "150vw" height = "150vh"></object>
+  <img id="player_image" src="../images/user_<%=user.weapon.toLowerCase()%>.png" height=135; width=135;>
+-->
+*/
