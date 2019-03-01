@@ -4,6 +4,8 @@ var router = express.Router();
 var Users = require('../models/User');
 var Villains = require('../models/Villain');
 var Game = require('../models/gamelogic');
+var userName;
+var userPassword;
 console.log(Game);
 
 //getting a new user which loads a blank form
@@ -78,6 +80,10 @@ router.put('/users/:id', function(req,res){
   var password=req.body.password.trim();
   var firstname = req.body.firstname.trim();
   var lastname = req.body.lastname.trim();
+
+userName = username;
+userPassword = password; 
+
   u.push(name);
   u.push(password);
   u.push(firstname);
@@ -104,6 +110,9 @@ var user = {
   firstname: req.query.first_name,
   lastname: req.query.last_name
 }
+
+userName = user.username;
+userPassword = user.password;
 
   var error;
   var k = Users.getUser(user.username);
@@ -142,6 +151,13 @@ router.get('/:user/results', function(req,res){
       villainchoice: ""
   }
   console.log(user_data.name);
+
+  userName = user_data.name;
+  var c = Users.getUser(user_data.name, function(){
+    console.log(user_data.name);
+  })
+
+  userPassword = c.password;
   //console.log(req.params.player_name);
 
   //console.log(user_data.name + "Name");
@@ -223,13 +239,26 @@ router.get('/:user/results', function(req,res){
    Villains.updateVillain(user_data.villain, villaininfo);
 
 
+
    res.status(200);
   // res.setHeader('Content-Type', 'text/html');
   // console.log("user data" +user_data);
    res.render('results', {user:user_data, winner:result});
 });
 
+router.get('/playagain',function(req,res){
+  var user_data = {
+    name: userName,
+    password: userPassword,
+  }
 
+  console.log("Pa NAME" + user_data.name);
+  console.log("Pa Password" + user_data.password);
+
+  res.status(200);
+  res.setHeader('Content-Type','text/html');
+  res.render('game', {user:user_data});
+});
 /*
 router.put('/user/:id', function(req, res){
   console.log('POST Request- /user/'+req.params.id);

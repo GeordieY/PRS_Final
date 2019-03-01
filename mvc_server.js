@@ -99,15 +99,24 @@ app.get('/rules', function(request, response){
   response.render('rules');
 });
 
-app.get('/playagain',function(request,response){
+/*
+app.get('/:user/playagain',function(request,response){
   var user_data = {
-    name: userName,
-    password: userPassword
+    name: request.params.user,
+    password:""
   }
+  var c = Users.getuser(request,params.user,function(){
+    console.log(request.params.user);
+  })
+
+  user_data.password = c.password;
+
+
   response.status(200);
   response.setHeader('Content-Type','text/html');
   response.render('game', {user:user_data});
 });
+*/
 //what should the callback be?
 app.get('/stats', function(request, response){
   console.log('Request- stats');
