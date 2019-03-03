@@ -120,15 +120,20 @@ app.get('/:user/playagain',function(request,response){
 */
 //what should the callback be?
 app.get('/stats', function(request, response){
+  var data = {};
   Users.getUsers(function(user_data){
   Villains.getVillains(function(villain_data){
-      var data = {};
     //will have to order user data
-    //  user_data.sort()
       data["player"] = user_data;
       data["villain"] = villain_data;
-      console.log("user data" + user_data);
-      console.log("villain data" + villain_data);
+
+      //console.log("type" + typeof(user_data));
+
+      console.log("Player" + JSON.stringify(data["player"]));
+      console.log("Villain" + JSON.stringify(data["villain"]));
+
+      //console.log("user data" + JSON.stringify(user_data));
+      //console.log("villain data" + JSON.stringify(villain_data));
   });
     console.log("Finished");
   });

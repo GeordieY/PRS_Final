@@ -53,9 +53,27 @@ exports.getvillain = function(villain_id, callback) {
 exports.getVillains = function(callback){
   var villain_data = [];
   var k = getAllDatabaseRows(function(villains){
-    callback(villains);
+    for(var i=0; i<villains.length;i++){
+      villain = {
+        name: villains[i].name,
+        games_played: villains[i].games_played,
+        won: villains[i].won,
+        tied: villains[i].tied,
+        lost: villains[i].lost,
+        paper_played: villains[i].paper_played,
+        rock_played: villains[i].rock_played,
+        scissors_played: villains[i].scissors_played,
+        password: villains[i].password
+      }
+      villain_data.push(villain);
+    }
+
+  //  callback(villains);
   });
-  console.log("Get Villains" + k);
+  return villain_data;
+  //return k;
+
+  //console.log("Get Villains" + k);
 
 }
 
@@ -69,7 +87,7 @@ if(new_info.length == 9){
         sheet.getCells(function(err, cells){
           for(var i=0; i<cells.length; i++){
             if(cells[i].value == villainname){
-              sheet.getCells({'min-row': i, 'max-row': i}, function(err, cells2){
+              sheet.getCells({'min-row': i+1, 'max-row': i+1}, function(err, cells2){
                 for(var j=0; j<cells2.length; j++){
                 cells2[j].setValue(new_info[j]);
                   }
@@ -100,7 +118,7 @@ var index;
           if(cells[i].value == usernae){
             index = i;
             sheet.getRows(function(err,rows){
-              rows[i].del(function(err){
+              rows[i-1].del(function(err){
                 console.log("Deleted");
               });
             });

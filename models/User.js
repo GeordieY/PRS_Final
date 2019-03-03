@@ -29,9 +29,25 @@ exports.getUser = function(user_id, callback) {
 
 exports.getUsers = function(callback){
   var user_data = [];
-  getAllDatabaseRows(function(users){
-    callback(users);
+  var k = getAllDatabaseRows(function(users){
+    for(var i=0; i<users.length;i++){
+      user = {
+        name: users[i].name,
+        games_played: users[i].games_played,
+        won: users[i].won,
+        tied: users[i].tied,
+        lost: users[i].lost,
+        paper_played: users[i].paper_played,
+        rock_played: users[i].rock_played,
+        scissors_played: users[i].scissors_played,
+        password: users[i].password
+      }
+    }
+    user_data.push(user);
   });
+
+  return user_data;
+  //return k;
   //console.log("Get Users" + k);
 }
 
@@ -55,7 +71,7 @@ exports.updateUser = function(user_id, new_info){
   return user;
 }
 */
-
+/*
 exports.changeParam= function(user_id, param, newinfo){
   var userup = getUser(user_id,function(){
     console.log(newinfo);
@@ -66,6 +82,7 @@ exports.changeParam= function(user_id, param, newinfo){
   return user;
 }
 
+*/
 exports.updateUser = function(username, new_info, callback){
 if(new_info.length == 9){
   var sheet;
@@ -75,7 +92,7 @@ if(new_info.length == 9){
         sheet.getCells(function(err, cells){
           for(var i=0; i<cells.length; i++){
             if(cells[i].value == username){
-              sheet.getCells({'min-row': i, 'max-row': i}, function(err, cells2){
+              sheet.getCells({'min-row': i+1, 'max-row': i+1}, function(err, cells2){
                 for(var j=0; j<cells2.length; j++){
                 cells2[j].setValue(new_info[j]);
                   }
@@ -106,7 +123,7 @@ var index;
           if(cells[i].value == username){
             index = i;
             sheet.getRows(function(err,rows){
-              rows[i].del(function(err){
+              rows[i-1].del(function(err){
                 console.log("Deleted");
               });
             });
