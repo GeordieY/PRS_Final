@@ -1,45 +1,35 @@
+<!--As of 01/07/19 this is pretty much set-->
+
 <!DOCTYPE html>
 <html>
 <head>
-  <title>P,R,S - Results</title>
-  <link rel="stylesheet" href="../styles/style.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <title>P,R,S - Rules</title>
+  <link rel="stylesheet" href="styles/style.css">
  </head>
 
- <script>
-  if(winner.winner == "Tie"){
-    $("#resultswinner").HTML("The game has been tied. No winner can be determined");
-  }
- </script>
+<body>
+  <% include global/header %>
 
- <body>
-   <% include global/header %>
-   <div id="results">
-     <h2> Results: Who Won the Game? </h2>
-     <br><br>
-        <%=user.name%> chose <%=user.weapon%>
-    <br><br>
-        <%=villain.name%> chose <%=villain.weapon%>
-    <br><br>
-        The winner is <%=winner.winner%>
-    <br><br>
-    <object id = "villain_image" type="image/svg+xml" data="../images/<%=villain.name.replace(' ', '_').toLowerCase()%>_<%=villain.weapon.toLowerCase()%>.svg" width = "150vw" height = "150vh"></object>
-    <!--<object id = "user_image" type="image/svg+xml" data="../images/user_<%=user.weapon.toLowerCase()%>.svg" width = "150vw" height = "150vh"></object>-->
-    <img id="player_image" src="../images/user_<%=user.weapon.toLowerCase()%>.png" height=135; width=135;>
-
-    </div>
-  <form action="/playagain" method="Get">
-     <input type="submit" name="Play Again" value="Play Again!">
-  </form>
-    <br>
-  <form action="/" method="Get">
-    <input type="submit" name="Log Out" value="Log Out">
- </form>
-
-   </form>
-
-
-   <% include global/footer %>
+  <div id="rules">
+    <h2>Rules</h2>
+    The game of P, R, S is based on trust, skill and determination.
+    Each player must:
+    <ul>
+      <li> In each round of the game, each player must select from one of the three following weapons: Paper, Rock, or Scissors.</li>
+      <li> Rock Beats Scissors </li>
+      <li> Rock Loses to Paper </li>
+      <li> Paper Beats Rock </li>
+      <li> Paper Loses to Scissors </li>
+      <li> Scissors Beats Paper </li>
+      <li> Scissors Loses to Rock </li>
+      <li> If you choose the same weapon as your opponent, its a Tie!</li>
+    </ul>
+    If you would like to read more, follow this link to view some <a href="http://worldrps.com/">official PRS organizations.</a>
+    <form action="/playagain" method="Get">
+       <input type="submit" name="Play Again" value="Play Again!">
+    </form>
+  </div>
+  <% include global/footer %>
   <script src="scripts/scripts.js"></script>
-</body>
+ </body>
 </html>

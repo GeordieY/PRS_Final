@@ -85,7 +85,7 @@ if(new_info.length == 9){
 }
 
 
-exports.deleteVillain = function(villainname, callback){
+exports.deleteVillain = function(username, callback){
 var sheet;
 var index;
   doc.useServiceAccountAuth( creds, function (err) {
@@ -93,7 +93,7 @@ var index;
       sheet = info.worksheets[doc];
       sheet.getCells(function(err, cells){
         for(var i=0; i<cells.length; i++){
-          if(cells[i].value == villainname){
+          if(cells[i].value == usernae){
             index = i;
             sheet.getRows(function(err,rows){
               rows[i].del(function(err){
