@@ -88,6 +88,7 @@ if(new_info.length == 9){
     console.log("Bienvenidos");
   });
   }
+  callback();
   console.log("callback");
 }
 
@@ -113,6 +114,7 @@ var index;
       });
     });
   });
+  callback();
 }
 
 

@@ -82,7 +82,7 @@ router.put('/users/:id', function(req,res){
   var lastname = req.body.lastname.trim();
 
 userName = username;
-userPassword = password; 
+userPassword = password;
 
   u.push(name);
   u.push(password);
@@ -235,8 +235,12 @@ router.get('/:user/results', function(req,res){
      }
    }
 
-   Users.updateUser(user_data.name, newinfo);
-   Villains.updateVillain(user_data.villain, villaininfo);
+   Users.updateUser(user_data.name, newinfo, function(){
+     console.log("User updated");
+   });
+   Villains.updateVillain(user_data.villain, villaininfo, function(){
+     console.log("Villain updated");
+   });
 
 
 
