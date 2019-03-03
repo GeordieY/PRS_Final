@@ -12,13 +12,13 @@ exports.getUser = function(user_id, callback) {
       if(user_data[i].name == String(user_id).trim()){
         user={
           name: user_data[i].name,
-          games_played:user_data[i].games_played,
+          gamesPlayed:user_data[i].gamesPlayed,
           lost:user_data[i].lost,
           won:user_data[i].won,
           tied:user_data[i].tied,
-          paper_played:user_data[i].paper_played,
-          rock_played:user_data[i].rock_played,
-          scissors_played:user_data[i].scissors_played,
+          paperPlayed:user_data[i].paperPlayed,
+          rockPlayed:user_data[i].rockPlayed,
+          scissorsPlayed:user_data[i].scissorsPlayed,
           password:user_data[i].password
         }
       }
@@ -29,42 +29,60 @@ exports.getUser = function(user_id, callback) {
 
 exports.getUsers = function(callback){
   var user_data = [];
-  var k = getAllDatabaseRows(function(users){
+   getAllDatabaseRows(function(users){
     for(var i=0; i<users.length;i++){
       user = {
         name: users[i].name,
-        games_played: users[i].games_played,
+        gamesPlayed: users[i].gamesPlayed,
         won: users[i].won,
         tied: users[i].tied,
         lost: users[i].lost,
-        paper_played: users[i].paper_played,
-        rock_played: users[i].rock_played,
-        scissors_played: users[i].scissors_played,
+        paperPlayed: users[i].paperPlayed,
+        rockPlayed: users[i].rockPlayed,
+        scissorsPlayed: users[i].scissorsPlayed,
         password: users[i].password
       }
-    }
+    //user_data.push(user);
+    console.log("Non-pushed villain" + JSON.stringify(user));
     user_data.push(user);
+    console.log("Pushed villain" + user_data[i]);
+  }
+    callback(users);
   });
+  //console.log("Data User" + user_data);
+  return user_data;
+}
+    /*
+    user_data.push(user);
+    for(var k=0; k<user_data.length;k++){
+      user_data[k] = JSON.stringify(user_data[k]);
+    }
+    //console.log(user_data);
+  //  user_data.push(JSON.stringify(user));
+    //console.log("user getting" + JSON.stringify(user));
+  //  callback(users);
 
+//  console.log("Userdata" + user_data);
+//  callback();
   return user_data;
   //return k;
   //console.log("Get Users" + k);
 }
 
-/*
+
 exports.updateUser = function(user_id, new_info){
   var userup = exports.getUser(user_id, function(){
     console.log(user_id + "working");
   });
   var k = String(new_info).split(",");
   userup.name = k[0];
-  userup.games_played = k[1];
+  userup.gamesPlayed = k[1];
   userup.lost = k[2];
   userup.won = k[3];
   userup.tied = k[4];
-  userup.paper_played = k[5];
-  userup.rock_played = k[6];
-  userup.scissors_played = k[7];
+  userup.paperPlayed = k[5];
+  userup.rockPlayed = k[6];
+  userup.scissorsPlayed = k[7];
   userup.password = k[8];
   var user = JSON.stringify(userup);
   var file = writeFile(user);
@@ -189,13 +207,13 @@ if(user_name == null || user_password == null || firstname == null || lastname =
 else{
   var user = {
     name: user_name,
-    games_played:0,
+    gamesPlayed:0,
     lost:0,
     won:0,
     tied:0,
-    paper_played:0,
-    rock_played:0,
-    scissors_played:0,
+    paperPlayed:0,
+    rockPlayed:0,
+    scissorsPlayed:0,
     password:0
   }
   //this should add a new user to the sheet
@@ -237,7 +255,7 @@ function writeFile(info){
 var createBlankUser= function(){
   var user={
     name:"test",
-    games_played:"0",
+    gamesPlayed:"0",
     lost:"0",
     won:"0",
     password:"test"
@@ -257,13 +275,13 @@ var createBlankUser= function(){
     if(u[0].trim()==user_id.trim()){
       user={
         name:u[0].trim(),
-        games_played:parseInt(u[1].trim()),
+        gamesPlayed:parseInt(u[1].trim()),
         lost:parseInt(u[2].trim()),
         won:parseInt(u[3].trim()),
         tied:parseInt(u[4].trim()),
-        paper_played:parseInt(u[5].trim()),
-        rock_played:parseInt(u[6].trim()),
-        scissors_played:parseInt(u[7].trim()),
+        paperPlayed:parseInt(u[5].trim()),
+        rockPlayed:parseInt(u[6].trim()),
+        scissorsPlayed:parseInt(u[7].trim()),
         password:u[8].trim()
       }
     }

@@ -123,14 +123,16 @@ app.get('/stats', function(request, response){
   var data = {};
   Users.getUsers(function(user_data){
   Villains.getVillains(function(villain_data){
+    console.log("MVC User" + user_data);
+    console.log("MVC Villain" + villain_data);
     //will have to order user data
       data["player"] = user_data;
       data["villain"] = villain_data;
 
       //console.log("type" + typeof(user_data));
 
-      console.log("Player" + JSON.stringify(data["player"]));
-      console.log("Villain" + JSON.stringify(data["villain"]));
+    //  console.log("Player" + JSON.stringify(data["player"]));
+    //  console.log("Villain" + JSON.stringify(data["villain"]));
 
       //console.log("user data" + JSON.stringify(user_data));
       //console.log("villain data" + JSON.stringify(villain_data));
