@@ -32,6 +32,7 @@ exports.getUsers = function(callback){
   getAllDatabaseRows(function(users){
     callback(users);
   });
+  //console.log("Get Users" + k);
 }
 
 /*

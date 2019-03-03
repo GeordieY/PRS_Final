@@ -127,6 +127,8 @@ app.get('/stats', function(request, response){
     //  user_data.sort()
       data["player"] = user_data;
       data["villain"] = villain_data;
+      console.log("user data" + user_data);
+      console.log("villain data" + villain_data);
   });
     console.log("Finished");
   });
