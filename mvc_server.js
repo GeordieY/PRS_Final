@@ -128,6 +128,7 @@ app.get('/stats', function(request, response){
       data["player"] = user_data;
       data["villain"] = villain_data;
   });
+    console.log("Finished");
   });
 
   response.status(200);
