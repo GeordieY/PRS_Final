@@ -97,7 +97,9 @@ userPassword = password;
 
 router.delete('/users/:id', function(req,res){
   var username = req.params.id;
-  User.deleteUser(username);
+  Users.deleteUser(username, function(){
+    console.log("User has been deleted");
+  });
   res.status(200);
   res.setHeader('Content-Type', 'text/html');
   res.redirect('/');
