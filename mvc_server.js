@@ -119,6 +119,10 @@ app.get('/:user/playagain',function(request,response){
 */
 //what should the callback be?
 app.get('/stats', function(request, response){
+  Users.getUsers(function(user_data){
+    
+  });
+  /*
   console.log('Request- stats');
   var users_data = Users.getUsers(function(userName){
     console.log(userName);
@@ -133,6 +137,7 @@ app.get('/stats', function(request, response){
   response.status(200);
   response.setHeader('Content-Type', 'text/html')
   response.render('stats', {users:data});
+  */
 });
 
 app.get('/about', function(request, response){
