@@ -10,6 +10,7 @@ app.use(favicon(__dirname + '/public/images/logo.png'));
 
 app.use(require('./controllers/user'));
 var Users = require(__dirname +'/models/User');
+var Villains = require(__dirname +'/models/Villain');
 var userName;
 var userPassword;
 var vilname;
@@ -120,8 +121,18 @@ app.get('/:user/playagain',function(request,response){
 //what should the callback be?
 app.get('/stats', function(request, response){
   Users.getUsers(function(user_data){
-    
+  Villains.getVillains(function(villain_data){
+      var data = {};
+    //will have to order user data
+    //  user_data.sort()
+      data["player"] = user_data;
+      data["villain"] = villain_data;
   });
+  });
+
+  response.status(200);
+  response.setHeader('Content-Type', 'text/html')
+  response.render('stats', {user:data});
   /*
   console.log('Request- stats');
   var users_data = Users.getUsers(function(userName){
