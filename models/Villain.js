@@ -56,6 +56,64 @@ exports.getVillains = function(callback){
   });
 }
 
+
+exports.updateVillain = function(villainname, new_info, callback){
+if(new_info.length == 9){
+  var sheet;
+  doc.useServiceAccountAuth(creds, function(err){
+      doc.getInfo(function(err,info){
+        sheet = info.worksheets[doc];
+        sheet.getCells(function(err, cells){
+          for(var i=0; i<cells.length; i++){
+            if(cells[i].value == villainname){
+              sheet.getCells({'min-row': i, 'max-row': i}, function(err, cells2){
+                for(var j=0; j<cells2.length; j++){
+                cells2[j].setValue(new_info[j]);
+                  }
+              });
+              break;
+            }
+          }
+        console.log("UpdateUser");
+        });
+        console.log("Hi");
+      });
+    console.log("Bienvenidos");
+  });
+  }
+  callback();
+  console.log("callback");
+}
+
+
+exports.deleteVillain = function(username, callback){
+var sheet;
+var index;
+  doc.useServiceAccountAuth( creds, function (err) {
+    doc.getInfo(function(err,info){
+      sheet = info.worksheets[doc];
+      sheet.getCells(function(err, cells){
+        for(var i=0; i<cells.length; i++){
+          if(cells[i].value == usernae){
+            index = i;
+            sheet.getRows(function(err,rows){
+              rows[i].del(function(err){
+                console.log("Deleted");
+              });
+            });
+            break;
+          }
+        }
+      });
+    });
+  });
+  callback();
+}
+
+
+
+
+/*
 exports.updateVillain = function(villain_id, new_info){
 //asser the new info is like an object {0,0,0,0,0,0 }
 //if this false throw Error
@@ -75,6 +133,7 @@ exports.updateVillain = function(villain_id, new_info){
   var file = writeFile(villain);
   return villain;
 }
+*/
 
 /*
 var getAllDatabaseRows= function(){

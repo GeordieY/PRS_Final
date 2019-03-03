@@ -33,6 +33,7 @@ exports.getUsers = function(callback){
   });
 }
 
+/*
 exports.updateUser = function(user_id, new_info){
   var userup = exports.getUser(user_id, function(){
     console.log(user_id + "working");
@@ -51,6 +52,7 @@ exports.updateUser = function(user_id, new_info){
   var file = writeFile(user);
   return user;
 }
+*/
 
 exports.changeParam= function(user_id, param, newinfo){
   var userup = getUser(user_id,function(){
@@ -62,6 +64,62 @@ exports.changeParam= function(user_id, param, newinfo){
   return user;
 }
 
+exports.updateUser = function(username, new_info, callback){
+if(new_info.length == 9){
+  var sheet;
+  doc.useServiceAccountAuth(creds, function(err){
+      doc.getInfo(function(err,info){
+        sheet = info.worksheets[doc];
+        sheet.getCells(function(err, cells){
+          for(var i=0; i<cells.length; i++){
+            if(cells[i].value == username){
+              sheet.getCells({'min-row': i, 'max-row': i}, function(err, cells2){
+                for(var j=0; j<cells2.length; j++){
+                cells2[j].setValue(new_info[j]);
+                  }
+              });
+              break;
+            }
+          }
+        console.log("UpdateUser");
+        });
+        console.log("Hi");
+      });
+    console.log("Bienvenidos");
+  });
+  }
+  callback();
+  console.log("callback");
+}
+
+
+exports.deleteUser = function(username, callback){
+var sheet;
+var index;
+  doc.useServiceAccountAuth( creds, function (err) {
+    doc.getInfo(function(err,info){
+      sheet = info.worksheets[doc];
+      sheet.getCells(function(err, cells){
+        for(var i=0; i<cells.length; i++){
+          if(cells[i].value == username){
+            index = i;
+            sheet.getRows(function(err,rows){
+              rows[i].del(function(err){
+                console.log("Deleted");
+              });
+            });
+            break;
+          }
+        }
+      });
+    });
+  });
+  callback();
+}
+
+
+
+/*
 exports.deleteUser = function(user_id){
   console.log("Users.deleteUser");
   var string;
@@ -76,21 +134,40 @@ exports.deleteUser = function(user_id){
   var file = writeFile(deletestring);
   return file;
 }
+*/
 
 exports.createUser = function(user_info){
+  if(user_info.length == 9){
   console.log("Users.createUser");
-  console.log()
+  //console.log()
+  var k = doc.useServiceAccountAuth(creds, function (err) {
+      doc.addRow(1, user_info,function(){
+        console.log("New user added");
+      });
+  });
+  return k;
+}
+
+else{
+  return null;
+
+}
+
+  /*
   var all_users = getAllDatabaseRows();
   var k = JSON.stringify(user_info);
   var final_string = all_users + k;
   var file = writeFile(final_string);
   return file;
+  */
 }
 
 exports.createnewUser = function(user_name, user_password, firstname, lastname){
 if(user_name == null || user_password == null || firstname == null || lastname == null){
   return false;
 }
+
+else{
   var user = {
     name: user_name,
     games_played:0,
@@ -102,13 +179,24 @@ if(user_name == null || user_password == null || firstname == null || lastname =
     scissors_played:0,
     password:0
   }
+  //this should add a new user to the sheet
+  doc.useServiceAccountAuth(creds, function (err ) {
+      doc.addRow(1, user,function(){
+        console.log("New user added");
+      });
+  });
+
+  return user;
+
+}
+  /*
   var all_users = getAllDatabaseRows();
   var k = JSON.stringify(user);
   var final_string = all_users + k;
   var file = writeFile(final_string);
   return user;
+  */
 }
-
 
 var getAllDatabaseRows= function(callback){
   //return fs.readFileSync(__dirname +'/../data/users.csv', 'utf8').split('\n');
