@@ -120,6 +120,30 @@ app.get('/:user/playagain',function(request,response){
 */
 //what should the callback be?
 app.get('/stats', function(request, response){
+  var data = {};
+  Users.getUsers(function(user_data){
+  Villains.getVillains(function(villain_data){
+    console.log("MVC User" + user_data);
+    console.log("MVC Villain" + villain_data);
+    //will have to order user data
+      data["player"] = user_data;
+      data["villain"] = villain_data;
+
+      //console.log("type" + typeof(user_data));
+
+    //  console.log("Player" + JSON.stringify(data["player"]));
+    //  console.log("Villain" + JSON.stringify(data["villain"]));
+
+      //console.log("user data" + JSON.stringify(user_data));
+      //console.log("villain data" + JSON.stringify(villain_data));
+  });
+    console.log("Finished");
+  });
+
+  response.status(200);
+  response.setHeader('Content-Type', 'text/html')
+  response.render('stats', {user:data});
+  /*
   console.log('Request- stats');
   var users_data = Users.getUsers(function(userName){
     console.log("");
@@ -133,7 +157,12 @@ app.get('/stats', function(request, response){
   //console.log("IMPORTANT"+villains_data)
   response.status(200);
   response.setHeader('Content-Type', 'text/html')
+<<<<<<< HEAD
   response.render('stats', {user:users_data, villain:villains_data});
+=======
+  response.render('stats', {users:data});
+  */
+>>>>>>> f85394f3e58f155af5e2ef6f564d86129e0795d8
 });
 
 app.get('/about', function(request, response){

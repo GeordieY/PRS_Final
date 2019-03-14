@@ -82,7 +82,7 @@ router.put('/users/:id', function(req,res){
   var lastname = req.body.lastname.trim();
 
 userName = username;
-userPassword = password; 
+userPassword = password;
 
   u.push(name);
   u.push(password);
@@ -97,7 +97,9 @@ userPassword = password;
 
 router.delete('/users/:id', function(req,res){
   var username = req.params.id;
-  User.deleteUser(username);
+  Users.deleteUser(username, function(){
+    console.log("User has been deleted");
+  });
   res.status(200);
   res.setHeader('Content-Type', 'text/html');
   res.redirect('/');
@@ -235,8 +237,12 @@ router.get('/:user/results', function(req,res){
      }
    }
 
-   Users.updateUser(user_data.name, newinfo);
-   Villains.updateVillain(user_data.villain, villaininfo);
+   Users.updateUser(user_data.name, newinfo, function(){
+     console.log("User updated");
+   });
+   Villains.updateVillain(user_data.villain, villaininfo, function(){
+     console.log("Villain updated");
+   });
 
 
 
