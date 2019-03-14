@@ -10,6 +10,7 @@ app.use(favicon(__dirname + '/public/images/logo.png'));
 
 app.use(require('./controllers/user'));
 var Users = require(__dirname +'/models/User');
+var Villains = require(__dirname +'/models/Villain');
 var userName;
 var userPassword;
 var vilname;
@@ -121,18 +122,18 @@ app.get('/:user/playagain',function(request,response){
 app.get('/stats', function(request, response){
   console.log('Request- stats');
   var users_data = Users.getUsers(function(userName){
-    console.log(userName);
+    console.log("");
   });
   var name = request.param.villain;
   var villains_data = Villains.getVillains(function(name){
     console.log(name);
   });
-  var data = {};
-  data["player"] = users_data;
-  data["villain"] = villains_data;
+  // var data = {};
+  // data["villain"] = villains_data;
+  //console.log("IMPORTANT"+villains_data)
   response.status(200);
   response.setHeader('Content-Type', 'text/html')
-  response.render('stats', {users:data});
+  response.render('stats', {user:users_data, villain:villains_data});
 });
 
 app.get('/about', function(request, response){
