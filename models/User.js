@@ -13,13 +13,13 @@ exports.getUser = function(user_id, callback) {
       if(user_data[i].name == String(user_id).trim()){
         user={
           name: user_data[i].name,
-          gamesPlayed:user_data[i].gamesPlayed,
+          gamesplayed:user_data[i].gamesplayed,
           lost:user_data[i].lost,
           won:user_data[i].won,
           tied:user_data[i].tied,
-          paperPlayed:user_data[i].paperPlayed,
-          rockPlayed:user_data[i].rockPlayed,
-          scissorsPlayed:user_data[i].scissorsPlayed,
+          paperplayed:user_data[i].paperplayed,
+          rockplayed:user_data[i].rockplayed,
+          scissorsplayed:user_data[i].scissorsplayed,
           password:user_data[i].password
         }
       }
@@ -30,78 +30,32 @@ exports.getUser = function(user_id, callback) {
 
 exports.getUsers = function(callback){
   var user_data = [];
+  var user2 = {};
    getAllDatabaseRows(function(users){
     for(var i=0; i<users.length;i++){
-      user = {
+      user2 = {
         name: users[i].name,
-        gamesPlayed: users[i].gamesPlayed,
+        gamesplayed: users[i].gamesplayed,
         won: users[i].won,
         tied: users[i].tied,
         lost: users[i].lost,
-        paperPlayed: users[i].paperPlayed,
-        rockPlayed: users[i].rockPlayed,
-        scissorsPlayed: users[i].scissorsPlayed,
+        paperplayed: users[i].paperplayed,
+        rockplayed: users[i].rockplayed,
+        scissorsplayed: users[i].scissorsplayed,
         password: users[i].password
       }
     //user_data.push(user);
-    console.log("Non-pushed villain" + JSON.stringify(user));
-    user_data.push(user);
-    console.log("Pushed villain" + user_data[i]);
+  //  console.log("Non-pushed villain" + JSON.stringify(user));
+    user_data.push(user2);
+  //  console.log("Pushed villain" + user_data[i]);
   }
+    console.log("Users" + users);
     callback(users);
+    //console.log(users)
   });
   //console.log("Data User" + user_data);
   return user_data;
 }
-    /*
-    user_data.push(user);
-    for(var k=0; k<user_data.length;k++){
-      user_data[k] = JSON.stringify(user_data[k]);
-    }
-    //console.log(user_data);
-  //  user_data.push(JSON.stringify(user));
-    //console.log("user getting" + JSON.stringify(user));
-  //  callback(users);
-
-//  console.log("Userdata" + user_data);
-//  callback();
-  return user_data;
-  //return k;
-  //console.log("Get Users" + k);
-}
-
-
-exports.updateUser = function(user_id, new_info){
-  var userup = exports.getUser(user_id, function(){
-    console.log(user_id + "working");
-  });
-  var k = String(new_info).split(",");
-  userup.name = k[0];
-  userup.gamesPlayed = k[1];
-  userup.lost = k[2];
-  userup.won = k[3];
-  userup.tied = k[4];
-  userup.paperPlayed = k[5];
-  userup.rockPlayed = k[6];
-  userup.scissorsPlayed = k[7];
-  userup.password = k[8];
-  var user = JSON.stringify(userup);
-  var file = writeFile(user);
-  return user;
-}
-*/
-/*
-exports.changeParam= function(user_id, param, newinfo){
-  var userup = getUser(user_id,function(){
-    console.log(newinfo);
-  });
-  userup.param = newinfo;
-  var user = JSON.stringify(userup);
-  var file = writeFile(userinfo);
-  return user;
-}
-
-*/
 exports.updateUser = function(username, new_info, callback){
 if(new_info.length == 9){
   var sheet;
@@ -208,13 +162,13 @@ if(user_name == null || user_password == null || firstname == null || lastname =
 else{
   var user = {
     name: user_name,
-    gamesPlayed:0,
+    gamesplayed:0,
     lost:0,
     won:0,
     tied:0,
-    paperPlayed:0,
-    rockPlayed:0,
-    scissorsPlayed:0,
+    paperplayed:0,
+    rockplayed:0,
+    scissorsplayed:0,
     password:0
   }
   //this should add a new user to the sheet
@@ -237,6 +191,7 @@ else{
 }
 
 var getAllDatabaseRows= function(callback){
+  var user_data = [];
   //return fs.readFileSync(__dirname +'/../data/users.csv', 'utf8').split('\n');
   doc.useServiceAccountAuth(creds, function (err) {
     doc.getRows(1, function (err, rows){
@@ -256,13 +211,13 @@ function writeFile(info){
 var createBlankUser= function(){
   var user={
     name:"test",
-    gamesPlayed:"0",
+    gamesplayed:"0",
     lost:"0",
     won:"0",
     tied:"0",
-    paperPlayed:"0",
-    rockPlayed:"0",
-    scissorsPlayed:"0".
+    paperplayed:"0",
+    rockplayed:"0",
+    scissorsplayed:"0",
     password:"test"
   };
   return user;
@@ -280,13 +235,13 @@ var createBlankUser= function(){
     if(u[0].trim()==user_id.trim()){
       user={
         name:u[0].trim(),
-        gamesPlayed:parseInt(u[1].trim()),
+        gamesplayed:parseInt(u[1].trim()),
         lost:parseInt(u[2].trim()),
         won:parseInt(u[3].trim()),
         tied:parseInt(u[4].trim()),
-        paperPlayed:parseInt(u[5].trim()),
-        rockPlayed:parseInt(u[6].trim()),
-        scissorsPlayed:parseInt(u[7].trim()),
+        paperplayed:parseInt(u[5].trim()),
+        rockplayed:parseInt(u[6].trim()),
+        scissorsplayed:parseInt(u[7].trim()),
         password:u[8].trim()
       }
     }

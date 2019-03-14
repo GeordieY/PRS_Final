@@ -1,7 +1,7 @@
 var fs = require("fs");
 var GoogleSpreadsheet = require('google-spreadsheet');
 var creds = require('./client_secret.json');
-var doc = new GoogleSpreadsheet('1AGog7RTXx63dncaYKYJqKc1DGJZFWBO4MjWXxm5_ljg');
+var doc = new GoogleSpreadsheet('1VFn0bbapJAyMM-_QQUie4mpj0B0Ctd9Clxmb4YPGVL4');
 
 /*
 exports.getVillain = function(villain_id) {
@@ -14,13 +14,13 @@ exports.getVillain = function(villain_id) {
     if(u[0].trim()==villain_id.trim()){
       villain={
         name:u[0].trim(),
-        gamesPlayed:parseInt(u[1].trim()),
+        gamesplayed:parseInt(u[1].trim()),
         lost:parseInt(u[2].trim()),
         won:parseInt(u[3].trim()),
         tied:parseInt(u[4].trim()),
         paperPlayed:parseInt(u[5].trim()),
-        rockPlayed:parseInt(u[6].trim()),
-        scissorsPlayed:parseInt(u[7].trim()),
+        rockplayed:parseInt(u[6].trim()),
+        scissorsplayed:parseInt(u[7].trim()),
         password:u[8].trim()
       }
     }
@@ -36,13 +36,13 @@ exports.getvillain = function(villain_id, callback) {
       if(villain_data[i].name == String(villain_id).trim()){
         villain={
           name: villain_data[i].name,
-          gamesPlayed:villain_data[i].gamesPlayed,
+          gamesplayed:villain_data[i].gamesplayed,
           lost:villain_data[i].lost,
           won:villain_data[i].won,
           tied:villain_data[i].tied,
-          paperPlayed:villain_data[i].paperPlayed,
-          rockPlayed:villain_data[i].rockPlayed,
-          scissorsPlayed:villain_data[i].scissorsPlayed
+          paperplayed:villain_data[i].paperplayed,
+          rockplayed:villain_data[i].rockplayed,
+          scissorsplayed:villain_data[i].scissorsplayed
         }
       }
     }
@@ -57,25 +57,25 @@ exports.getVillains = function(callback){
     for(var i=0; i<villains.length;i++){
       villain2 = {
         name: villains[i].name,
-        gamesPlayed: villains[i].gamesPlayed,
+        gamesplayed: villains[i].gamesplayed,
         lost: villains[i].lost,
         won: villains[i].won,
         tied: villains[i].tied,
-        paperPlayed: villains[i].paperPlayed,
-        rockPlayed: villains[i].rockPlayed,
-        scissorsPlayed: villains[i].scissorsPlayed,
+        paperplayed: villains[i].paperplayed,
+        rockplayed: villains[i].rockplayed,
+        scissorsplayed: villains[i].scissorsplayed,
       }
 
-      console.log("Non-pushed villain" + JSON.stringify(villain2));
+      //console.log("Non-pushed villain" + JSON.stringify(villain2));
       villain_data.push(villain2);
 
-      console.log("Pushed villain" + JSON.stringify(villain_data[i]));
+    //  console.log("Pushed villain" + JSON.stringify(villain_data[i]));
 
       //for(var i=0; i<villain_data.length;i++)
       //villain_data.push(JSON.stringify(villain2));
     //console.log("villain getting" + JSON.stringify(villain));
     }
-
+    //console.log("villains" + villains );
     //console.log(JSON.stringify(villain_data));
     callback(villains);
 
@@ -158,13 +158,13 @@ exports.updateVillain = function(villain_id, new_info){
   });
   var k = String(new_info).split(",");
   villainup.name = k[0];
-  villainup.gamesPlayed = k[1];
+  villainup.gamesplayed = k[1];
   villainup.lost = k[2];
   villainup.won = k[3];
   villainup.tied = k[4];
   villainup.paperPlayed = k[5];
-  villainup.rockPlayed = k[6];
-  villainup.scissorsPlayed = k[7];
+  villainup.rockplayed = k[6];
+  villainup.scissorsplayed = k[7];
   var villain = JSON.stringify(villainup);
   var file = writeFile(villain);
   return villain;
@@ -180,7 +180,7 @@ var getAllDatabaseRows= function(callback){
   //return fs.readFileSync(__dirname +'/../data/villains.csv', 'utf8').split('\n');
   doc.useServiceAccountAuth(creds, function (err) {
     doc.getRows(1, function (err, rows){
-  //  console.log(rows);
+      console.log(rows);
       callback(rows);
     });
   });

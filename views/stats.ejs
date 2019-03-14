@@ -14,27 +14,27 @@
       <tr>
        <th class="top_row">Player Name</th>
        <th class="top_row">Games Played</th>
-       <th class="top_row">Wins </th>
-       <th class="top_row">Losses </th>
-       <th class = "top_row"> Ties </th>
+       <th class="top_row">won </th>
+       <th class="top_row">lost </th>
+       <th class = "top_row"> tied </th>
        <th class="top_row">Win Percentage</th>
-       <th class="top_row">Rock%</th>
-       <th class="top_row">Paper%</th>
-       <th class="top_row">Scissors%</th>
+       <th class="top_row">rockplayed%</th>
+       <th class="top_row">paperplayed%</th>
+       <th class="top_row">scissorsplayed%</th>
      </tr>
 
-      <%for(var i=0;i< user.length-1;i++){%>
-         <% if(user[i].total_games>0){ %>
+      <%for(var i=0;i< user.length;i++){%>
+         <% if(user[i].gamesplayed>0){ %>
           <tr>
           <td><span class="player_name_span"><%=user[i].name%> </span> </td>
-          <td> <%=user[i].total_games%></td>
-          <td> <%=user[i].wins%></td>
-          <td> <%=user[i].losses%> </td>
-          <td> <%=user[i].ties%> </td>
-          <td> <%=Math.round((user[i].wins/(user[i].total_games))*100)+"%"%></td>
-          <td> <%=Math.round(((user[i].rock)/(user[i].total_games))*100)+"%"%></td>
-          <td> <%=Math.round(((user[i].paper)/(user[i].total_games))*100)+"%"%></td>
-          <td> <%=Math.round(((user[i].scissors)/(user[i].total_games))*100)+"%"%></td>
+          <td> <%=user[i].gamesplayed%></td>
+          <td> <%=user[i].won%></td>
+          <td> <%=user[i].lost%> </td>
+          <td> <%=user[i].tied%> </td>
+          <td> <%=Math.round((user[i].won/(user[i].gamesplayed))*100)+"%"%></td>
+          <td> <%=Math.round(((user[i].rockplayed)/(user[i].gamesplayed))*100)+"%"%></td>
+          <td> <%=Math.round(((user[i].paperplayed)/(user[i].gamesplayed))*100)+"%"%></td>
+          <td> <%=Math.round(((user[i].scissorsplayed)/(user[i].gamesplayed))*100)+"%"%></td>
           </tr>
           <% } else{ %>
              <tr>
@@ -57,27 +57,27 @@
       <tr>
        <th class="top_row">Villain name</th>
        <th class="top_row">Games Played</th>
-       <th class="top_row">Wins </th>
-       <th class="top_row">Losses </th>
-       <th class = "top_row"> Ties </th>
+       <th class="top_row">won </th>
+       <th class="top_row">lost </th>
+       <th class = "top_row"> tied </th>
        <th class="top_row">Win Percentage</th>
-       <th class="top_row">Rock% </th>
-       <th class="top_row">Paper% </th>
-       <th class="top_row">Scissors% </th>
+       <th class="top_row">rockplayed% </th>
+       <th class="top_row">paperplayed% </th>
+       <th class="top_row">scissorsplayed% </th>
      </tr>
 
       <%for (var k=0;k< villain.length;k++){%>
-        <% if(villain[k].total_games>0){ %>
+        <% if(villain[k].gamesplayed>0){ %>
           <tr>
           <td><span class="player_name_span"><%=villain[k].name.replace('_', ' ')%> </span> </td>
-          <td> <%=villain[k].total_games%></td>
-          <td> <%=villain[k].wins%></td>
-          <td> <%=villain[k].losses%></td>
-          <td> <%=villain[k].ties%> </td>
-          <td> <%=Math.round((villain[k].wins/(villain[k].total_games))*100)+"%"%></td>
-          <td> <%=Math.round(((villain[k].rock)/(villain[k].total_games))*100)+"%"%></td>
-          <td> <%=Math.round(((villain[k].paper)/(villain[k].total_games))*100)+"%"%></td>
-          <td> <%=Math.round(((villain[k].scissors)/(villain[k].total_games))*100)+"%"%></td>
+          <td> <%=villain[k].gamesplayed%></td>
+          <td> <%=villain[k].won%></td>
+          <td> <%=villain[k].lost%></td>
+          <td> <%=villain[k].tied%> </td>
+          <td> <%=Math.round((villain[k].won/(villain[k].gamesplayed))*100)+"%"%></td>
+          <td> <%=Math.round(((villain[k].rockplayed)/(villain[k].gamesplayed))*100)+"%"%></td>
+          <td> <%=Math.round(((villain[k].paperplayed)/(villain[k].gamesplayed))*100)+"%"%></td>
+          <td> <%=Math.round(((villain[k].scissorsplayed)/(villain[k].gamesplayed))*100)+"%"%></td>
           </tr>
           <% } else{ %>
               <tr>
@@ -98,18 +98,18 @@
 
     <div id "strats">
       <ul>
-        <li> Bones will randomly throws paper, rock, or scissors.</li>
-        <li> Manny will always throw paper. </li>
-        <li> Regal will always throw rock.</li>
-        <li> Mickey will always throw scissors.</li>
+        <li> Bones will randomly throws paperplayed, rockplayed, or scissorsplayed.</li>
+        <li> Manny will always throw paperplayed. </li>
+        <li> Regal will always throw rockplayed.</li>
+        <li> Mickey will always throw scissorsplayed.</li>
         <li> Gato will choose a randomly generated weapon, but then he will sometimes choose to win, lose, or tie, with the weighting towards winning </li>
         <li> Mr. Modern will be randomly assigned a weapon, but then he will sometimes choose to win, lose, or tie, with the weighting towards tieing. </li>
         <li> The Boss will always win.</li>
         <li> Comic Hans will always lose just like Comic Sans.</li>
-        <li> Harry will randomly throws paper, rock, or scissors.</li>
-        <li> Pixie will randomly throws paper, rock, or scissors. </li>
-        <li> Spock will randomly throws paper, rock, or scissors. </li>
-        <li> The Magician will randomly throws paper, rock, or scissors. .</li>
+        <li> Harry will randomly throws paperplayed, rockplayed, or scissorsplayed.</li>
+        <li> Pixie will randomly throws paperplayed, rockplayed, or scissorsplayed. </li>
+        <li> Spock will randomly throws paperplayed, rockplayed, or scissorsplayed. </li>
+        <li> The Magician will randomly throws paperplayed, rockplayed, or scissorsplayed. .</li>
     </div>
 
 
