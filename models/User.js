@@ -4,6 +4,7 @@ var creds = require('./client_secret.json');
 var doc = new GoogleSpreadsheet('1AGog7RTXx63dncaYKYJqKc1DGJZFWBO4MjWXxm5_ljg');
 
 var user = {};
+
 exports.getUser = function(user_id, callback) {
   console.log("Users.getUser: "+user_id);
   exports.getUsers(function(user_data){
@@ -258,6 +259,10 @@ var createBlankUser= function(){
     gamesPlayed:"0",
     lost:"0",
     won:"0",
+    tied:"0",
+    paperPlayed:"0",
+    rockPlayed:"0",
+    scissorsPlayed:"0".
     password:"test"
   };
   return user;
