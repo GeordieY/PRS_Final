@@ -180,7 +180,7 @@ var getAllDatabaseRows= function(callback){
   //return fs.readFileSync(__dirname +'/../data/villains.csv', 'utf8').split('\n');
   doc.useServiceAccountAuth(creds, function (err) {
     doc.getRows(1, function (err, rows){
-      console.log(rows);
+    //  console.log(rows);
       callback(rows);
     });
   });

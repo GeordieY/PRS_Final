@@ -152,18 +152,23 @@ router.get('/:user/results', function(req,res){
       villain: String(req.query.villains),
       villainchoice: ""
   }
-  console.log("Name" + user_data.name);
+  //console.log("Name" + user_data.name);
   userName = user_data.name;
   var user_d;
   Users.getUser(user_data.name, function(user_d){
     userPassword = user_d.password;
   });
-  console.log("Queries" + req.query.villains + "Weapon" + req.query.weapons);
+  //console.log("Queries" + req.query.villains + "Weapon" + req.query.weapons);
   var newinfo = [];
   var villaininfo = [];
-  console.log("user_data"+user_data);
+  //console.log("user_data"+user_data);
   var villainchoice = Game.Villainthrows(user_data.villain, user_data.weapon);
   var userchoice = user_data.weapon;
+
+
+
+
+
   user_data.villainchoice = String(villainchoice);
 
   if(villainchoice == "" || userchoice== ""){
@@ -177,11 +182,13 @@ router.get('/:user/results', function(req,res){
     var result = {
       winner: String(Game.winner(villainchoice,userchoice,user_data.villain,user_data.name))
     }
+  //  console.log("Winner" + result.winner);
 
     Users.getUser(user_data.name,function(user_d){
     Villains.getvillain(user_data.villain, function(villain_d){
         //console.log(user_data.villain + "Got villain");
-        if(result.winner==user_d.name){
+    //  console.log("User stuff" + JSON.stringify(user_d) + "Vil stuff" + JSON.stringify(villain_d));
+      if(result.winner==user_d.name){
           if(userchoice== "Paper"){
             newinfo = [user_d.name, parseInt(user_d.gamesplayed) + 1, parseInt(user_d.won) + 1, user_d.lost, user_d.tied, parseInt(user_d.paperplayed)+ 1, user_d.rockplayed,user_d.scissorsplayed, user_d.password];
             villaininfo = [villain_d.name, parseInt(villain_d.gamesplayed) + 1, villain_d.won, parseInt(villain_d.lost)+1, villain_d.tied, villain_d.paperplayed, parseInt(villain_d.rockplayed) + 1, villain_d.scissorsplayed];
@@ -194,6 +201,7 @@ router.get('/:user/results', function(req,res){
             newinfo = [user_d.name, parseInt(user_d.gamesplayed) + 1, parseInt(user_d.won) + 1, user_d.lost, user_d.tied, parseInt(user_d.paperplayed), user_d.rockplayed,parseInt(user_d.scissorsplayed) + 1, user_d.password];
             villaininfo = [villain_d.name, parseInt(villain_d.gamesplayed) + 1, villain_d.won, parseInt(villain_d.lost)+1, villain_d.tied, parseInt(villain_d.paperplayed) + 1, parseInt(villain_d.rockplayed), parseInt(villain_d.scissorsplayed)];
           }
+          //console.log("ALMOST THERE");
         }
        else if(result.winner==user_data.villain){
          if(userchoice== "Paper"){
@@ -208,7 +216,9 @@ router.get('/:user/results', function(req,res){
            newinfo = [user_d.name, parseInt(user_d.gamesplayed) + 1, parseInt(user_d.won) , parseInt(user_d.lost) +1 , user_d.tied, parseInt(user_d.paperplayed), user_d.rockplayed,parseInt(user_d.scissorsplayed) + 1, user_d.password];
            villaininfo = [villain_d.name, parseInt(villain_d.gamesplayed) + 1, parseInt(villain_d.won) + 1, parseInt(villain_d.lost), villain_d.tied, parseInt(villain_d.paperplayed), parseInt(villain_d.rockplayed) + 1, parseInt(villain_d.scissorsplayed)];
          }
+         //console.log("ALMOST THERE");
        }
+
        else{
          if(userchoice== "Paper"){
            newinfo = [user_d.name, parseInt(user_d.gamesplayed) + 1, parseInt(user_d.won) , parseInt(user_d.lost) , parseInt(user_d.tied) + 1 , parseInt(user_d.paperplayed)+ 1, user_d.rockplayed,user_d.scissorsplayed, user_d.password];
@@ -222,7 +232,20 @@ router.get('/:user/results', function(req,res){
            newinfo = [user_d.name, parseInt(user_d.gamesplayed) + 1, parseInt(user_d.won) , parseInt(user_d.lost) , parseInt(user_d.tied) + 1, parseInt(user_d.paperplayed), user_d.rockplayed,parseInt(user_d.scissorsplayed) + 1, user_d.password];
            villaininfo = [villain_d.name, parseInt(villain_d.gamesplayed) + 1, parseInt(villain_d.won), parseInt(villain_d.lost), parseInt(villain_d.tied) + 1, parseInt(villain_d.paperplayed) + 1, parseInt(villain_d.rockplayed), parseInt(villain_d.scissorsplayed) + 1];
          }
+         //console.log("ALMOST THERE");
        }
+       console.log("I MADE IT");
+       Users.updateUser(user_data.name, newinfo, function(){
+        Villains.updateVillain(user_data.villain, villaininfo, function(){
+          console.log("New Info TAG" + newinfo);
+          console.log("VIL Info TAG" + villaininfo);
+          res.status(200);
+          res.setHeader('Content-Type', 'text/html');
+         // console.log("user data" +user_data);
+          res.render('results', {user:user_data, winner:result});
+           //console.log("Villain updated");
+      });
+      });
     });
     });
   }
@@ -230,20 +253,6 @@ router.get('/:user/results', function(req,res){
     //user_data.weapon = villain_d;
 //if time permits: write another modular function to do this
 
-
-   console.log("Info" + newinfo);
-   console.log("Info2" + villaininfo);
-
-   Users.updateUser(user_data.name, newinfo, function(){
-     Villains.updateVillain(user_data.villain, villaininfo, function(){
-       //console.log("Villain updated");
-
-     res.status(200);
-     res.setHeader('Content-Type', 'text/html');
-    // console.log("user data" +user_data);
-     res.render('results', {user:user_data, winner:result});
-   });
-  });
 });
 
 router.get('/playagain',function(req,res){

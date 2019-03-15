@@ -23,6 +23,7 @@ exports.getUser = function(user_id, callback) {
           auser.scissorsplayed=user_data[i].scissorsplayed;
           auser.password=user_data[i].password;
           //console.log("pass1 "+auser.name);
+          console.log("getUser");
           callback(auser);
           //return auser;
 
@@ -66,7 +67,7 @@ exports.getUsers = function(callback){
 
 exports.updateUser = function(user_id, updates, callback){
   updateRow(user_id, updates, function(){
-    //console.log("doing next");
+    console.log("doing next");
     callback();
   });
 }
@@ -93,13 +94,26 @@ var updateRow=function(userName, newStuff, callback){
             break;
           }
         }
-        //console.log("doing callback");
+        console.log("doing callback");
         callback();
       });
     });
   });
 }
 
+
+exports.deleteUser = function(username,callback){
+  getAllDatabaseRows(function(rows){
+    for(var i = 0; i <rows.length; i++){ //check to see if this needs to be -1
+        if(rows[i].name.trim() == username){
+          //console.log(rows[i]);
+        //  console.log("user found and updated");
+           rows[i].del();
+      callback();
+      }
+    }
+});
+}
 
 
 
@@ -156,7 +170,7 @@ if(new_info.length == 9){
 
 }
 */
-
+/*
 exports.deleteUser = function(username, callback){
 var sheet;
 var index;
@@ -180,8 +194,7 @@ var index;
   });
   callback();
 }
-
-
+*/
 
 /*
 exports.deleteUser = function(user_id){
