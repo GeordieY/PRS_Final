@@ -155,11 +155,12 @@ router.get('/:user/results', function(req,res){
   console.log(user_data.name);
 
   userName = user_data.name;
-  var c = Users.getUser(user_data.name, function(){
-    console.log(user_data.name);
-  })
+  var user_d;
+  Users.getUser(user_data.name, function(user_d){
+    userPassword = user_d.password;
+    //console.log(user_data.name);
 
-  userPassword = c.password;
+  });
   //console.log(req.params.player_name);
 
   //console.log(user_data.name + "Name");
@@ -184,10 +185,11 @@ router.get('/:user/results', function(req,res){
       winner: String(Game.winner(villainchoice,userchoice,user_data.villain,user_data.name))
     }
 
-    var useredit = Users.getUser(user_data.name,function(){
-      console.log(user_data.name + "Got user");
+    var useredit = Users.getUser(user_data.name,function(user_d){
+      
+      //console.log(user_data.name + "Got user");
     });
-    var villainedit = Villains.getvillain(user_data.villain, function(){
+    var villainedit = Villains.getvillain(user_data.villain, function(user_c){
       console.log(user_data.villain + "Got villain");
     });
 

@@ -2,30 +2,36 @@ var fs = require("fs");
 var GoogleSpreadsheet = require('google-spreadsheet');
 var creds = require('./client_secret.json');
 var doc = new GoogleSpreadsheet('1AGog7RTXx63dncaYKYJqKc1DGJZFWBO4MjWXxm5_ljg');
-
 var user = {};
 
 exports.getUser = function(user_id, callback) {
+  var auser={};
   console.log("Users.getUser: "+user_id);
-  exports.getUsers(function(user_data){
-    for(var i=1; i<user_data.length;i++){
+   getAllDatabaseRows(function(user_data){
+    for(var i=0; i<user_data.length;i++){
     //  var user = {};
       if(user_data[i].name == String(user_id).trim()){
-        user={
-          name: user_data[i].name,
-          gamesplayed:user_data[i].gamesplayed,
-          lost:user_data[i].lost,
-          won:user_data[i].won,
-          tied:user_data[i].tied,
-          paperplayed:user_data[i].paperplayed,
-          rockplayed:user_data[i].rockplayed,
-          scissorsplayed:user_data[i].scissorsplayed,
-          password:user_data[i].password
-        }
+        console.log(user_data[i]);
+          auser.name=user_data[i].name;
+
+          auser.gamesplayed=user_data[i].gamesplayed;
+          auser.lost=user_data[i].lost;
+          auser.won=user_data[i].won;
+          auser.tied=user_data[i].tied;
+          auser.paperplayed=user_data[i].paperplayed;
+          auser.rockplayed=user_data[i].rockplayed;
+          auser.scissorsplayed=user_data[i].scissorsplayed;
+          auser.password=user_data[i].password;
+          console.log("pass1 "+auser.name);
+          callback(auser);
+          //return auser;
+
       }
+
     }
   });
-  return user;
+  console.log("auser" + auser);
+  return auser;
 }
 
 exports.getUsers = function(callback){
@@ -78,10 +84,11 @@ if(new_info.length == 9){
         console.log("Hi");
       });
     console.log("Bienvenidos");
+    callback();
+    console.log("callback");
   });
   }
-  callback();
-  console.log("callback");
+
 }
 
 

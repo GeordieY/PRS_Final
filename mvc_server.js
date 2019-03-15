@@ -35,61 +35,50 @@ var user_data = {
   password: request.query.password
 };
 
-
 userName = user_data.name;
 userPassword = user_data.password;
 var failure = " ";
 
-
-
 if(request.query.type == "on"){
+  console.log("On happened");
   response.status(200);
   response.setHeader('Content-Type', 'text/html');
   response.render('game', {user:user_data});
 }
 
-else{
+if(userName == ""){
+  console.log("No name submitted");
+  response.status(200);
+  response.setHeader('Content-Type', 'text/html');
+  response.render('index', {user:user_data, error:failure});
+}
+//else{
+console.log("I am here")
+Users.getUser(userName, function(user_d){
+  //console.log("Users.get")
+  console.log(user_d)
+  console.log("I am here now")
+    var usrpassword = user_d.password;
+  //  console.log("User gotten" + user);
+  //  console.log("user Password" + usrpassword);
 
-Users.getUser(userName, function(user_data){
-  if(user_data.name == ""){
-    console.log("No name submitted");
-    response.status(200);
-    response.setHeader('Content-Type', 'text/html');
-    response.render('index', {user:user_data, error:failure});
-  }
-  else if(user_data.password == userPassword){
-    response.status(200);
-    response.setHeader('Content-Type', 'text/html')
-    response.render('game', {user:user_data});
-  }
-  else{
-    failure = "Failure" ;
-    userName = "";
-    userPassword = "";
-    response.status(200);
-    response.setHeader('Content-Type', 'text/html');
-    response.render('index', {user:user_data, error:failure});
-  }
+    if(usrpassword == userPassword){
+      response.status(200);
+      response.setHeader('Content-Type', 'text/html')
+      response.render('game', {user:user_d});
+    }
+    else{
+      failure = "Failure" ;
+      userName = "";
+      userPassword = "";
+      response.status(200);
+      response.setHeader('Content-Type', 'text/html');
+      response.render('index', {user:user_d, error:failure});
+    }
+    console.log('Request- login');
 });
 
-}
-  console.log('Request- login');
-  //var u = Users.getUser(request.query.player_name);
-//need to write MVC server details;
 
-/* do you need this if this is in the controller ?
-app.get('/:user/results', function(request, response){
-  console.log('Request- /'+request.params.user+'/results');
-
-  var user_data={
-      name: request.params.user,
-      weapon: request.query.weapon
-  };
-
-  response.status(200);
-  response.setHeader('Content-Type', 'text/html')
-  response.send(JSON.stringify(user_data));
-*/
 });
 
 
