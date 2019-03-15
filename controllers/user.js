@@ -152,27 +152,20 @@ router.get('/:user/results', function(req,res){
       villain: String(req.query.villains),
       villainchoice: ""
   }
-  console.log(user_data.name);
-
+  console.log("Name" + user_data.name);
   userName = user_data.name;
   var user_d;
   Users.getUser(user_data.name, function(user_d){
     userPassword = user_d.password;
-    //console.log(user_data.name);
-
   });
-  //console.log(req.params.player_name);
-
-  //console.log(user_data.name + "Name");
-
   console.log("Queries" + req.query.villains + "Weapon" + req.query.weapons);
-
-  var newinfo;
-  var villaininfo;
+  var newinfo = [];
+  var villaininfo = [];
   console.log("user_data"+user_data);
   var villainchoice = Game.Villainthrows(user_data.villain, user_data.weapon);
   var userchoice = user_data.weapon;
   user_data.villainchoice = String(villainchoice);
+
   if(villainchoice == "" || userchoice== ""){
     console.log("User and Villain Empty");
     res.status(200);
@@ -185,73 +178,72 @@ router.get('/:user/results', function(req,res){
       winner: String(Game.winner(villainchoice,userchoice,user_data.villain,user_data.name))
     }
 
-    var useredit = Users.getUser(user_data.name,function(user_d){
-      
-      //console.log(user_data.name + "Got user");
+    Users.getUser(user_data.name,function(user_d){
+    Villains.getvillain(user_data.villain, function(villain_d){
+        //console.log(user_data.villain + "Got villain");
+        if(result.winner==user_d.name){
+          if(userchoice== "Paper"){
+            newinfo = [user_d.name, parseInt(user_d.gamesplayed) + 1, parseInt(user_d.won) + 1, user_d.lost, user_d.tied, parseInt(user_d.paperplayed)+ 1, user_d.rockplayed,user_d.scissorsplayed, user_d.password];
+            villaininfo = [villain_d.name, parseInt(villain_d.gamesplayed) + 1, villain_d.won, parseInt(villain_d.lost)+1, villain_d.tied, villain_d.paperplayed, parseInt(villain_d.rockplayed) + 1, villain_d.scissorsplayed];
+          }
+          else if(userchoice == "Rock"){
+            newinfo = [user_d.name, parseInt(user_d.gamesplayed) + 1, parseInt(user_d.won) + 1, user_d.lost, user_d.tied, parseInt(user_d.paperplayed), parseInt(user_d.rockplayed) +1,user_d.scissorsplayed, user_d.password];
+            villaininfo = [villain_d.name, parseInt(villain_d.gamesplayed) + 1, villain_d.won, parseInt(villain_d.lost)+1, villain_d.tied, villain_d.paperplayed, parseInt(villain_d.rockplayed), parseInt(villain_d.scissorsplayed) + 1];
+          }
+          else{
+            newinfo = [user_d.name, parseInt(user_d.gamesplayed) + 1, parseInt(user_d.won) + 1, user_d.lost, user_d.tied, parseInt(user_d.paperplayed), user_d.rockplayed,parseInt(user_d.scissorsplayed) + 1, user_d.password];
+            villaininfo = [villain_d.name, parseInt(villain_d.gamesplayed) + 1, villain_d.won, parseInt(villain_d.lost)+1, villain_d.tied, parseInt(villain_d.paperplayed) + 1, parseInt(villain_d.rockplayed), parseInt(villain_d.scissorsplayed)];
+          }
+        }
+       else if(result.winner==user_data.villain){
+         if(userchoice== "Paper"){
+           newinfo = [user_d.name, parseInt(user_d.gamesplayed) + 1, parseInt(user_d.won) , parseInt(user_d.lost) +1 , user_d.tied, parseInt(user_d.paperplayed)+ 1, user_d.rockplayed,user_d.scissorsplayed, user_d.password];
+           villaininfo = [villain_d.name, parseInt(villain_d.gamesplayed) + 1, parseInt(villain_d.won) + 1, parseInt(villain_d.lost), villain_d.tied, villain_d.paperplayed, parseInt(villain_d.rockplayed), parseInt(villain_d.scissorsplayed) + 1];
+         }
+         else if(userchoice == "Rock"){
+           newinfo = [user_d.name, parseInt(user_d.gamesplayed) + 1, parseInt(user_d.won) , parseInt(user_d.lost) +1 , user_d.tied, parseInt(user_d.paperplayed), parseInt(user_d.rockplayed) +1,user_d.scissorsplayed, user_d.password];
+              villaininfo = [villain_d.name, parseInt(villain_d.gamesplayed) + 1, parseInt(villain_d.won) + 1, parseInt(villain_d.lost), villain_d.tied, parseInt(villain_d.paperplayed) + 1, parseInt(villain_d.rockplayed), parseInt(villain_d.scissorsplayed)];
+         }
+         else{
+           newinfo = [user_d.name, parseInt(user_d.gamesplayed) + 1, parseInt(user_d.won) , parseInt(user_d.lost) +1 , user_d.tied, parseInt(user_d.paperplayed), user_d.rockplayed,parseInt(user_d.scissorsplayed) + 1, user_d.password];
+           villaininfo = [villain_d.name, parseInt(villain_d.gamesplayed) + 1, parseInt(villain_d.won) + 1, parseInt(villain_d.lost), villain_d.tied, parseInt(villain_d.paperplayed), parseInt(villain_d.rockplayed) + 1, parseInt(villain_d.scissorsplayed)];
+         }
+       }
+       else{
+         if(userchoice== "Paper"){
+           newinfo = [user_d.name, parseInt(user_d.gamesplayed) + 1, parseInt(user_d.won) , parseInt(user_d.lost) , parseInt(user_d.tied) + 1 , parseInt(user_d.paperplayed)+ 1, user_d.rockplayed,user_d.scissorsplayed, user_d.password];
+           villaininfo = [villain_d.name, parseInt(villain_d.gamesplayed) + 1, parseInt(villain_d.won), parseInt(villain_d.lost), parseInt(villain_d.tied) + 1, parseInt(villain_d.paperplayed) + 1, parseInt(villain_d.rockplayed), parseInt(villain_d.scissorsplayed)];
+         }
+         else if(userchoice == "Rock"){
+           newinfo = [user_d.name, parseInt(user_d.gamesplayed) + 1, parseInt(user_d.won) , parseInt(user_d.lost) , parseInt(user_d.tied) + 1, parseInt(user_d.paperplayed), parseInt(user_d.rockplayed) +1,user_d.scissorsplayed, user_d.password];
+           villaininfo = [villain_d.name, parseInt(villain_d.gamesplayed) + 1, parseInt(villain_d.won), parseInt(villain_d.lost), parseInt(villain_d.tied) + 1, parseInt(villain_d.paperplayed) , parseInt(villain_d.rockplayed) + 1, parseInt(villain_d.scissorsplayed)];
+         }
+         else{
+           newinfo = [user_d.name, parseInt(user_d.gamesplayed) + 1, parseInt(user_d.won) , parseInt(user_d.lost) , parseInt(user_d.tied) + 1, parseInt(user_d.paperplayed), user_d.rockplayed,parseInt(user_d.scissorsplayed) + 1, user_d.password];
+           villaininfo = [villain_d.name, parseInt(villain_d.gamesplayed) + 1, parseInt(villain_d.won), parseInt(villain_d.lost), parseInt(villain_d.tied) + 1, parseInt(villain_d.paperplayed) + 1, parseInt(villain_d.rockplayed), parseInt(villain_d.scissorsplayed) + 1];
+         }
+       }
     });
-    var villainedit = Villains.getvillain(user_data.villain, function(user_c){
-      console.log(user_data.villain + "Got villain");
     });
+  }
 
-    //user_data.weapon = villainedit;
+    //user_data.weapon = villain_d;
 //if time permits: write another modular function to do this
-      if(result.winner==useredit.name){
-        if(userchoice== "Paper"){
-          newinfo = [useredit.name, parseInt(useredit.games_played) + 1, parseInt(useredit.won) + 1, useredit.lost, useredit.tied, parseInt(useredit.paper_played)+ 1, useredit.rock_played,useredit.scissors_played, useredit.password];
-          villaininfo = [villainedit.name, parseInt(villainedit.games_played) + 1, villainedit.won, parseInt(villainedit.lost)+1, villainedit.tied, villainedit.paper_played, parseInt(villainedit.rock_played) + 1, villainedit.scissors_played];
-        }
-        else if(userchoice == "Rock"){
-          newinfo = [useredit.name, parseInt(useredit.games_played) + 1, parseInt(useredit.won) + 1, useredit.lost, useredit.tied, parseInt(useredit.paper_played), parseInt(useredit.rock_played) +1,useredit.scissors_played, useredit.password];
-          villaininfo = [villainedit.name, parseInt(villainedit.games_played) + 1, villainedit.won, parseInt(villainedit.lost)+1, villainedit.tied, villainedit.paper_played, parseInt(villainedit.rock_played), parseInt(villainedit.scissors_played) + 1];
-        }
-        else{
-          newinfo = [useredit.name, parseInt(useredit.games_played) + 1, parseInt(useredit.won) + 1, useredit.lost, useredit.tied, parseInt(useredit.paper_played), useredit.rock_played,parseInt(useredit.scissors_played) + 1, useredit.password];
-          villaininfo = [villainedit.name, parseInt(villainedit.games_played) + 1, villainedit.won, parseInt(villainedit.lost)+1, villainedit.tied, parseInt(villainedit.paper_played) + 1, parseInt(villainedit.rock_played), parseInt(villainedit.scissors_played)];
-        }
-      }
-     else if(result.winner==user_data.villain){
-       if(userchoice== "Paper"){
-         newinfo = [useredit.name, parseInt(useredit.games_played) + 1, parseInt(useredit.won) , parseInt(useredit.lost) +1 , useredit.tied, parseInt(useredit.paper_played)+ 1, useredit.rock_played,useredit.scissors_played, useredit.password];
-         villaininfo = [villainedit.name, parseInt(villainedit.games_played) + 1, parseInt(villainedit.won) + 1, parseInt(villainedit.lost), villainedit.tied, villainedit.paper_played, parseInt(villainedit.rock_played), parseInt(villainedit.scissors_played) + 1];
-       }
-       else if(userchoice == "Rock"){
-         newinfo = [useredit.name, parseInt(useredit.games_played) + 1, parseInt(useredit.won) , parseInt(useredit.lost) +1 , useredit.tied, parseInt(useredit.paper_played), parseInt(useredit.rock_played) +1,useredit.scissors_played, useredit.password];
-            villaininfo = [villainedit.name, parseInt(villainedit.games_played) + 1, parseInt(villainedit.won) + 1, parseInt(villainedit.lost), villainedit.tied, parseInt(villainedit.paper_played) + 1, parseInt(villainedit.rock_played), parseInt(villainedit.scissors_played)];
-       }
-       else{
-         newinfo = [useredit.name, parseInt(useredit.games_played) + 1, parseInt(useredit.won) , parseInt(useredit.lost) +1 , useredit.tied, parseInt(useredit.paper_played), useredit.rock_played,parseInt(useredit.scissors_played) + 1, useredit.password];
-         villaininfo = [villainedit.name, parseInt(villainedit.games_played) + 1, parseInt(villainedit.won) + 1, parseInt(villainedit.lost), villainedit.tied, parseInt(villainedit.paper_played), parseInt(villainedit.rock_played) + 1, parseInt(villainedit.scissors_played)];
-       }
-     }
-     else{
-       if(userchoice== "Paper"){
-         newinfo = [useredit.name, parseInt(useredit.games_played) + 1, parseInt(useredit.won) , parseInt(useredit.lost) , parseInt(useredit.tied) + 1 , parseInt(useredit.paper_played)+ 1, useredit.rock_played,useredit.scissors_played, useredit.password];
-         villaininfo = [villainedit.name, parseInt(villainedit.games_played) + 1, parseInt(villainedit.won), parseInt(villainedit.lost), parseInt(villainedit.tied) + 1, parseInt(villainedit.paper_played) + 1, parseInt(villainedit.rock_played), parseInt(villainedit.scissors_played)];
-       }
-       else if(userchoice == "Rock"){
-         newinfo = [useredit.name, parseInt(useredit.games_played) + 1, parseInt(useredit.won) , parseInt(useredit.lost) , parseInt(useredit.tied) + 1, parseInt(useredit.paper_played), parseInt(useredit.rock_played) +1,useredit.scissors_played, useredit.password];
-         villaininfo = [villainedit.name, parseInt(villainedit.games_played) + 1, parseInt(villainedit.won), parseInt(villainedit.lost), parseInt(villainedit.tied) + 1, parseInt(villainedit.paper_played) , parseInt(villainedit.rock_played) + 1, parseInt(villainedit.scissors_played)];
-       }
-       else{
-         newinfo = [useredit.name, parseInt(useredit.games_played) + 1, parseInt(useredit.won) , parseInt(useredit.lost) , parseInt(useredit.tied) + 1, parseInt(useredit.paper_played), useredit.rock_played,parseInt(useredit.scissors_played) + 1, useredit.password];
-         villaininfo = [villainedit.name, parseInt(villainedit.games_played) + 1, parseInt(villainedit.won), parseInt(villainedit.lost), parseInt(villainedit.tied) + 1, parseInt(villainedit.paper_played) + 1, parseInt(villainedit.rock_played), parseInt(villainedit.scissors_played) + 1];
-       }
-     }
-   }
+
+
+   console.log("Info" + newinfo);
+   console.log("Info2" + villaininfo);
 
    Users.updateUser(user_data.name, newinfo, function(){
-     console.log("User updated");
+     Villains.updateVillain(user_data.villain, villaininfo, function(){
+       //console.log("Villain updated");
+
+     res.status(200);
+     res.setHeader('Content-Type', 'text/html');
+    // console.log("user data" +user_data);
+     res.render('results', {user:user_data, winner:result});
    });
-   Villains.updateVillain(user_data.villain, villaininfo, function(){
-     console.log("Villain updated");
-   });
-
-
-
-   res.status(200);
-  // res.setHeader('Content-Type', 'text/html');
-  // console.log("user data" +user_data);
-   res.render('results', {user:user_data, winner:result});
+  });
 });
 
 router.get('/playagain',function(req,res){
@@ -267,38 +259,7 @@ router.get('/playagain',function(req,res){
   res.setHeader('Content-Type','text/html');
   res.render('game', {user:user_data});
 });
-/*
-router.put('/user/:id', function(req, res){
-  console.log('POST Request- /user/'+req.params.id);
 
-  var u={
-    name = req.body.username.trim(),
-    password=req.body.password.trim()
-  }
-  res.status(200);
-  res.setHeader('Content-Type', 'text/html')
-  res.render('user_details', {user:u});
-});
-
-router.post('/users',function(req,res){
-  res.status(200);
-  res.setHeader('Content-Type', 'text/html');
-  res.render('index', {user:u});
-});
-router.get('/user/new', function(req,res){
-  var userinfo = "";
-  res.status(200);
-  res.setHeader('Content-Type', 'text/html');
-  res.render('user_details', {user:userinfo});
-});
-
-router.delete('/users:id', function(req,res) {
-  var id = req.params.user;
-  res.status(200);
-  res.setHeader('Content-Type', 'text/html');
-  res.render('user_details'. {user:id});
-});
-*/
 
 
 module.exports = router;

@@ -22,7 +22,7 @@ exports.getUser = function(user_id, callback) {
           auser.rockplayed=user_data[i].rockplayed;
           auser.scissorsplayed=user_data[i].scissorsplayed;
           auser.password=user_data[i].password;
-          console.log("pass1 "+auser.name);
+          //console.log("pass1 "+auser.name);
           callback(auser);
           //return auser;
 
@@ -30,7 +30,7 @@ exports.getUser = function(user_id, callback) {
 
     }
   });
-  console.log("auser" + auser);
+  //console.log("auser" + auser);
   return auser;
 }
 
@@ -55,16 +55,79 @@ exports.getUsers = function(callback){
     user_data.push(user2);
   //  console.log("Pushed villain" + user_data[i]);
   }
-    console.log("Users" + users);
+    //console.log("Users" + users);
     callback(users);
     //console.log(users)
   });
   //console.log("Data User" + user_data);
   return user_data;
 }
+
+
+exports.updateUser = function(user_id, updates, callback){
+  updateRow(user_id, updates, function(){
+    //console.log("doing next");
+    callback();
+  });
+}
+
+
+
+var updateRow=function(userName, newStuff, callback){
+  var sheet;
+  doc.useServiceAccountAuth(creds, function (err) {
+    doc.getInfo(function(err,info){
+      sheet=info.worksheets[0];
+      sheet.getCells({
+        'min-col': 1,
+        'max-col': 1,
+        'return-empty': true}, function(err, cells) {
+        for(var i=0; i<cells.length;i++){
+          if(cells[i].value==userName){
+            sheet.getCells({'min-row': i+1,'max-row': i+1},
+            function(err, cells) {
+              for(var i=0; i<cells.length;i++){
+                cells[i].setValue(newStuff[i]);
+              }
+            });
+            break;
+          }
+        }
+        //console.log("doing callback");
+        callback();
+      });
+    });
+  });
+}
+
+
+
+
+/*
 exports.updateUser = function(username, new_info, callback){
 if(new_info.length == 9){
   var sheet;
+  getAllDatabaseRows(function(rows){
+    for(var i=0;i<rows.length;i++){
+        if(rows[i].name == String(username).trim()){
+            rows[i].name = new_info[0];
+            rows[i].gamesplayed= new_info[1];
+            rows[i].won = new_info[2];
+            rows[i].tied = new_info[3];
+            rows[i].lost = new_info[4];
+            rows[i].paperplayed = new_info[5];
+            rows[i].rockplayed = new_info[6];
+            rows[i].scissorsplayed = new_info[7];
+            rows[i].password = new_info[8];
+            rows[i].save(callback);
+            console.log("rows" + rows[i] + "new_info" + new_info);
+        }
+    }
+  });
+
+
+
+  /*
   doc.useServiceAccountAuth(creds, function(err){
       doc.getInfo(function(err,info){
         sheet = info.worksheets[doc];
@@ -87,10 +150,12 @@ if(new_info.length == 9){
     callback();
     console.log("callback");
   });
+
+
   }
 
 }
-
+*/
 
 exports.deleteUser = function(username, callback){
 var sheet;
